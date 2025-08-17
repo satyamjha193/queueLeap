@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analytics & Reports Dashboard</title>
+  <link rel="stylesheet" href="db.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="main-content">
+    <h1>Analytics & Reports</h1>
+    <p class="subtitle">Comprehensive queue management analytics and insights</p>
+
+    <div class="report-header">
+      <h2>Report Dashboard</h2>
+      <div class="right-actions">
+        <select id="timeRange">
+          <option>Today</option>
+          <option>This Week</option>
+          <option selected>This Month</option>
+          <option>This Quarter</option>
+        </select>
+        <button class="btn-export">Export Report</button>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="card">Total Customers<br><span class="value">1,847</span><br><small>↑ 12% vs last week</small></div>
+      <div class="card green">Avg Wait Time<br><span class="value">8.2 min</span><br><small>↓ 15% improvement</small></div>
+      <div class="card orange">Satisfaction<br><span class="value">4.2/5</span><br><small>– Stable rating</small></div>
+      <div class="card purple">Peak Hour<br><span class="value">12:00 PM</span></div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-card">
+        <h3>Weekly Customer Volume</h3>
+        <canvas id="weeklyChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Service Type Distribution</h3>
+        <canvas id="serviceChart"></canvas>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-card">
+        <h3>Hourly Queue Volume</h3>
+        <canvas id="hourlyChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Wait Time & Satisfaction Trend</h3>
+        <canvas id="trendChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="db.js"></script>
+</body>
+</html>

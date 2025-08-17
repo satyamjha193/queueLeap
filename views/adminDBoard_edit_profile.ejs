@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile & Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/Stylesheets/adminDBoard_edit_profile.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="page-title"  data-aos="zoom-in" data-aos-delay="100">Profile & Settings</h1>
+    <p class="page-subtitle" data-aos="zoom-in" data-aos-delay="200">Manage your account and system preferences</p>
+
+     <a href="/admin-dashboard"  style="margin-bottom: 30px;">
+    <i class="fas fa-back"></i> Back-to-dashboard
+     </a>
+
+
+
+<div id="profileToast" style="
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 14px;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.4s ease, bottom 0.4s ease;
+">
+  Profile updated successfully!
+</div>
+
+
+
+
+
+
+      <!-- Save Button -->
+   <div class="save-container">
+
+  <!-- <a href="/admin-dashboard" id="saveChangesBtn" class="btn save-btn" style="margin-bottom: 30px;">
+    <i class="fas fa-back"></i> Back-to-dashboard
+  </> -->
+
+
+  <button id="saveChangesBtn" class="btn save-btn" style="margin-bottom: 30px;">
+    <i class="fas fa-save"></i> Save Changes
+  </button>
+</div>
+
+
+    <div class="main-grid">
+      <!-- Profile Info Card -->
+      <div class="card profile-card">
+        <h2><i class="fas fa-user-circle" data-aos="zoom-in" data-aos-delay="300"></i> Profile Information</h2>
+        <p class="card-sub" data-aos="zoom-in" data-aos-delay="400">Update your personal information and contact details</p>
+        <div class="avatar-section">
+          <% if (admin.profilePic) { %>
+            <img class="avatar" src="/uploads/adminDP/<%= admin.profilePic %>" alt="Admin Avatar">
+
+          <% } else { %>
+            <div class="avatar"><%= admin.name.charAt(0).toUpperCase() %></div>
+          <% } %>
+          <button class="btn change-photo" data-aos="zoom-in" data-aos-delay="300" style="cursor: auto;">Change Photo</button>
+        </div>
+
+        <p class="avatar-note">JPG, PNG or GIF. Max size 2MB</p>
+          
+
+
+
+            <form class="form" action="/update-profile" method="POST">
+              <div class="form-row">
+                <label>Full Name
+                  <input type="text" name="fullName" value="<%= admin.name %>" disabled  data-aos="zoom-in" data-aos-delay="100" />
+                </label>
+                <label>Email Address
+                  <input type="email" name="email" value="<%= admin.email %>" disabled  data-aos="zoom-in" data-aos-delay="200" />
+                </label>
+              </div>
+
+              <div class="form-row">
+                <label>Phone Number
+                  <input type="tel" name="phone" value="<%= admin.phone %>" disabled  data-aos="zoom-in" data-aos-delay="300" />
+                </label>
+                <label>Role
+                  <input type="text" name="role" value="Admin system" disabled data-aos="zoom-in" data-aos-delay="400" />
+                </label>
+              </div>
+          </form>
+
+
+
+
+
+
+
+          <div style="margin-top: 10px; text-align: right;">
+            <button class="btn save-btn" onclick="toggleEdit(true)" data-aos="zoom-in" data-aos-delay="500">
+              <i class="fas fa-edit"></i> Edit Profile
+            </button>
+        </div>
+
+      </div>
+
+
+ <!-- Edit Profile -->
+    <div class="card" id="profileEdit" style="display:none;">
+      <h3><i class="fas fa-user-edit" style="color:#2563eb"></i> Edit Profile</h3>
+      <form  id="adminEditForm" method="POST" action="/admin/updateProfile" enctype="multipart/form-data" class="edit-form">
+        <div class="profile-edit-upper">
+          <img class="profile-img" src="/uploads/adminDP/<%= admin.profilePic %>" alt="Profile Image" />
+         
+
+          <div class="upload-container">
+  <label for="profilePic" class="upload-label">
+    <i class="fas fa-upload"></i> Upload Profile Picture
+  </label>
+  <input type="file" name="profilePic" id="profilePic" accept="image/*">
+  <span id="fileName">No file chosen</span>
+</div>
+
+
+
+<input type="file" name="profilePic" id="profilePic" accept="image/*" onchange="previewImage(event)">
+<img id="preview" style="max-height: 80px; margin-top: 10px;" />
+
+<script>
+  function previewImage(event) {
+    const output = document.getElementById('preview');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = () => URL.revokeObjectURL(output.src);
+  }
+</script>
+
+
+        </div>
+      <div class="profile-info">
+        <input type="text" name="name" placeholder="Full Name" value="<%= admin.name %>">
+        <input type="email" name="email" placeholder="Email" value="<%= admin.email %>" disabled>
+        <input type="text" name="phone" placeholder="Phone Number" value="<%= admin.phone %>" disabled>
+        <input type="text" name="hospital" placeholder="Hospital" value="<%= admin.shopname %>">
+      </div>
+
+        <div class="edit-btn-group">
+  <button type="button" class="back-btn" onclick="toggleEdit(false)">
+    <i class="fas fa-arrow-left"></i> Back
+  </button>
+
+        <div class="right-buttons">
+          <button type="button" id="deleteAccountBtn" class="danger-btn">Delete Your Account</button>
+        </div>
+</div>
+
+      </form>
+    </div>
+ <!-- Edit Profile end  -->
+
+     
+<!-- Modal -->
+<div id="deleteModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <form id="deleteForm" method="POST" action="/admin/delete-account">
+      <label><input type="radio" name="reason" value="No longer needed" required> No longer needed</label><br>
+      <label><input type="radio" name="reason" value="Privacy concerns"> Privacy concerns</label><br>
+      <label><input type="radio" name="reason" value="Too many notifications"> Too many notifications</label><br>
+      <label><input type="radio" name="reason" value="Other"> Other</label><br>
+
+      <div class="confirm-section">
+        <p>Are you sure you want to permanently delete your account?</p>
+        <button type="submit" class="confirm-btn">Yes, Delete</button>
+        <button type="button" class="cancel-btn" id="cancelDelete">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal  end-->
+
+
+
+<!-- Security Card -->
+<div class="card security-card">
+  <h2>
+    <i class="fas fa-shield-alt" data-aos="zoom-in" data-aos-delay="100"></i>
+    Security
+  </h2>
+  <p class="card-sub" data-aos="zoom-in" data-aos-delay="200">
+    Account security settings
+  </p>
+
+
+
+<!-- Change Password Button -->
+<button class="btn security-btn"
+        onclick="openChangePasswordModal()"
+        data-aos="zoom-in" data-aos-delay="200">
+  <i class="fas fa-key"></i> Change Password
+</button>
+
+<!-- Change Password Box -->
+<div id="changePasswordBox" class="change-password-box">
+  <div class="change-password-content">
+    <span class="close-btn" onclick="closeChangePasswordModal()">&times;</span>
+    <h2>Change Password</h2>
+    <form>
+      <label for="currentPassword">Current Password</label>
+      <input type="password" id="currentPassword" name="currentPassword" required>
+
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword" name="newPassword" required>
+
+      <label for="confirmPassword">Confirm New Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+      <button type="submit" class="btn submit-btn">Update Password</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+  <!-- 2FA button adapts to current state -->
+  <% if (security.twoFAEnabled) { %>
+    <button class="btn security-btn"
+            onclick="toggle2FA(false)"
+            data-aos="zoom-in" data-aos-delay="300">
+      <i class="fas fa-lock"></i> Disable Two‑Factor Authentication
+    </button>
+  <% } else { %>
+    <button class="btn security-btn"
+            onclick="toggle2FA(true)"
+            data-aos="zoom-in" data-aos-delay="300">
+      <i class="fas fa-lock"></i> Enable Two‑Factor Authentication
+    </button>
+  <% } %>
+
+  <p class="last-login">
+    <span style="color: green;">Last login:</span> <%= security.lastLoginStr %><br>
+    IP: <%= security.lastLoginIP %>
+  </p>
+</div>
+
+
+
+
+<!-- ========================================== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- Notification Preferences -->
+<div class="card notif-card">
+  <h2><i class="fas fa-bell" data-aos="zoom-in" data-aos-delay="100"></i> Notification Preferences</h2>
+  <p class="card-sub" data-aos="zoom-in" data-aos-delay="200">Configure how you want to receive notifications</p>
+
+  <div class="toggle-group">
+    <label>Email Notifications
+      <div class="switch">
+        <input type="checkbox" id="emailNotif" <%= notifPrefs.email ? 'checked' : '' %> data-aos="zoom-in" data-aos-delay="300">
+        <span class="slider"></span>
+      </div>
+    </label>
+
+    <label>Push Notifications
+      <div class="switch">
+        <input type="checkbox" id="pushNotif" <%= notifPrefs.push ? 'checked' : '' %> data-aos="zoom-in" data-aos-delay="300">
+        <span class="slider"></span>
+      </div>
+    </label>
+
+    <label>SMS Notifications
+      <div class="switch">
+        <input type="checkbox" id="smsNotif" <%= notifPrefs.sms ? 'checked' : '' %> data-aos="zoom-in" data-aos-delay="300">
+        <span class="slider"></span>
+      </div>
+    </label>
+
+    <label>Report Notifications
+      <div class="switch">
+        <input type="checkbox" id="reportNotif" <%= notifPrefs.report ? 'checked' : '' %> data-aos="zoom-in" data-aos-delay="400">
+        <span class="slider"></span>
+      </div>
+    </label>
+  </div>
+</div>
+
+
+      <!-- System Preferences -->
+      <div class="card system-card">
+        <h2><i class="fas fa-cogs"></i> System Preferences</h2>
+        <p class="card-sub">Application settings</p>
+        <label>Time Zone
+          <select>
+            <option>UTC-5 (Eastern Time)</option>
+            <option>UTC+5:30 (India Standard Time)</option>
+            <option>UTC+0 (GMT)</option>
+          </select>
+        </label>
+        <label>Language
+          <select>
+            <option>English</option>
+            <!-- <option>Hindi</option>
+            <option>Spanish</option> -->
+          </select>
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+  // This runs only if URL contains success query param
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    const toast = document.getElementById("profileToast");
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+</script>
+
+
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="/javascripts/adminDBoard_edit_profile.js"></script>
+</body>
+</html>

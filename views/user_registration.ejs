@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+  
+  .google-btn {
+    margin-top: 15px;
+    background-color: white;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+  }
+
+  .google-btn img {
+    width: 18px;
+    margin-right: 8px;
+  }
+
+
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      font-weight: 600;
+    }
+
+    .tab.active {
+      border-color: #007bff;
+      color: #007bff;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .google-btn {
+      margin-top: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .google-btn img {
+      width: 20px;
+      margin-right: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .tabs {
+        flex-direction: column;
+      }
+      .tab {
+        margin-bottom: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+  <div class="tabs">
+    <div class="tab active" data-tab="email">Email</div>
+    <div class="tab" data-tab="otp">OTP</div>
+    <div class="tab" data-tab="google">Google</div>
+  </div>
+
+  <!-- Email Register -->
+  <form class="form-section active" id="email" method="POST" action="/register/email">
+    <input type="email" class="input" name="email" placeholder="Email" required>
+    <input type="password" class="input" name="password" placeholder="Password" required>
+    <button class="btn" type="submit">Register with Email</button>
+  </form>
+
+  <!-- Phone OTP Register -->
+  <form class="form-section" id="otp" method="POST" action="/register/phone">
+    <div id="phonePart">
+      <input type="text" class="input" name="name" id="usernameI" placeholder="Username" required>
+      <input type="tel" class="input" name="phone" id="phoneInput" placeholder="+91XXXXXXXXXX" required>
+
+      <button class="btn" type="button" id="sendOtpBtn">Send OTP</button>
+    </div>
+    <div id="otpPart" style="display: none;">
+      <input type="text" class="input" name="otp" id="otpInput" placeholder="Enter OTP" required>
+      <button class="btn" type="submit" id="verifyOtpBtn">Submit OTP</button>
+    </div>
+  </form>
+
+  <!-- Google OAuth Register -->
+  <div class="form-section" id="google">
+    <a class="google-btn" href="/auth/google">
+      <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
+      Continue with Google
+    </a>
+  </div>
+</div>
+
+
+<script src="/javascripts/user_register.js"></script>
+  <script>
+  const tabs = document.querySelectorAll('.tab');
+  const sections = document.querySelectorAll('.form-section');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  document.getElementById("sendOtpBtn").addEventListener("click", function () {
+    const phone = document.getElementById("phoneInput").value;
+    if (phone) {
+      // Call your backend to send OTP (optional fetch/ajax can go here)
+      document.getElementById("phonePart").style.display = "none";
+      document.getElementById("otpPart").style.display = "block";
+    }
+  });
+</script>
+
+
+</body>
+</html>

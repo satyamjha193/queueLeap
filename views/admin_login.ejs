@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Queuesys</title>
+   <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body {
+      background: linear-gradient(135deg, #e0f2fe, #eef2ff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 10px;
+    }
+
+    .login-wrapper {
+      max-width: 650px;
+      width: 100%;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      overflow: hidden;
+      height: 500px;
+    }
+
+    .login-banner {
+      background: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 20px 20px 10px; /* Reduced height */
+    }
+    .login-banner h1 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    .login-banner p {
+      font-size: 13px;
+    }
+
+    .login-section {
+      padding: 20px 20px 25px; /* Reduced height */
+    }
+
+    .tab-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 8px;
+    }
+
+    .tab-buttons button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: #e2e8f0;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .tab-buttons button.active {
+      background: #007BFF;
+      color: #fff;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 1.2rem;
+      width: 100%;
+    }
+
+    .input-group i {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      transform: translateY(-50%);
+      color: #888;
+    }
+
+    .input-group input {
+      width: 100%;
+      max-width: 100%;
+      padding: 12px 12px 12px 40px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.3s;
+      font-size: 15px;
+    }
+
+    .input-group input:focus {
+      border-color: #007BFF;
+      outline: none;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: #fff;
+      color: #444;
+      border: 1px solid #ccc;
+      margin-top: 1rem;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .google-btn:hover {
+      background-color: #f5f5f5;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 14px;
+    }
+
+    .register-link a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrapper">
+    <div class="login-banner">
+      <h1 data-aos="zoom-in" data-aos-delay="100">Welcome to QueueLeap</h1>
+      <p data-aos="zoom-in" data-aos-delay="200">Login to manage queues, view stats, and access your admin panel</p>
+    </div>
+
+    <div class="login-section">
+      <div class="tab-buttons">
+        <button data-aos="zoom-in" data-aos-delay="100" onclick="showTab('emailTab')" id="emailBtn" class="active">Email</button>
+        <button data-aos="zoom-in" data-aos-delay="200" onclick="showTab('phoneTab')" id="phoneBtn">Phone</button>
+      </div>
+
+      <% if (flash.error && flash.error.length > 0) { %>
+        <div data-aos="zoom-in" data-aos-delay="100" class="flash-msg" style="background:#f8d7da; color:#721c24; padding:10px; margin:10px 0; border-radius:5px; position:relative;">
+          <%= flash.error[0] %>
+          <span onclick="this.parentElement.style.display='none'" style="position:absolute; right:10px; top:5px; cursor:pointer;">&times;</span>
+        </div>
+      <% } %>
+
+      <form class="tab-content active" id="emailTab" action="/admin/dashboard" method="POST">
+        <div class="input-group" data-aos="zoom-in" data-aos-delay="100">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email" name="email" required />
+        </div>
+        <div class="input-group" data-aos="zoom-in" data-aos-delay="200">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" name="password" required />
+        </div>
+        <button  class="btn" type="submit">Login</button>
+      </form>
+
+
+      <!-- login with phone number -->
+      <!-- <form class="tab-content" id="phoneTab" action="/phone-login" method="POST">
+        <div class="input-group" data-aos="zoom-in" data-aos-delay="100">
+          <i class="fas fa-phone"></i>
+          <input type="tel" placeholder="Phone Number" name="phone" />
+        </div>
+        <div class="input-group" data-aos="zoom-in" data-aos-delay="200">
+          <i class="fas fa-key"></i>
+          <input type="text" placeholder="Enter OTP" name="otp" />
+        </div>
+        <button data-aos="zoom-in" data-aos-delay="300" class="btn" type="submit">Login via OTP</button>
+      </form> -->
+
+  
+      <form class="tab-content" id="phoneTab" action="/phone-login" method="POST">
+  <!-- Phone Input -->
+  <div class="input-group" data-aos="zoom-in" data-aos-delay="100">
+    <i class="fas fa-phone"></i>
+    <input type="tel" name="phone" id="phoneInput" placeholder="Enter Phone Number" required />
+  </div>
+
+  <!-- OTP Section (Initially Hidden) -->
+  <div class="input-group" id="otpGroup" style="display: none;" data-aos="zoom-in" data-aos-delay="200">
+    <i class="fas fa-key"></i>
+    <input type="text" name="otp" id="otpInput" placeholder="Enter OTP" />
+  </div>
+
+  <!-- Get OTP Button -->
+  <button class="btn" id="getOtpBtn" type="button" data-aos="zoom-in" data-aos-delay="300">
+    <i class="fas fa-paper-plane"></i> Get OTP
+  </button>
+
+  <!-- Submit OTP Button (Initially Hidden) -->
+  <button class="btn" id="loginOtpBtn" type="submit" style="display: none;" data-aos="zoom-in" data-aos-delay="400">
+    <i class="fas fa-sign-in-alt"></i> Login via OTP
+  </button>
+      </form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const getOtpBtn = document.getElementById('getOtpBtn');
+    const loginOtpBtn = document.getElementById('loginOtpBtn');
+    const otpGroup = document.getElementById('otpGroup');
+    const phoneInput = document.getElementById('phoneInput');
+
+    getOtpBtn.addEventListener('click', async () => {
+      const phone = phoneInput.value.trim();
+      if (!/^\d{10}$/.test(phone)) {
+        alert('Please enter a valid 10-digit phone number');
+        return;
+      }
+
+      try {
+        // Send OTP request to backend (optional AJAX)
+        await fetch('/send-phone-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone })
+        });
+
+        // Show OTP input and login button
+        getOtpBtn.style.display = 'none';
+        otpGroup.style.display = 'flex';
+        loginOtpBtn.style.display = 'inline-block';
+      } catch (err) {
+        alert('Failed to send OTP. Please try again.');
+      }
+    });
+  });
+</script>
+
+
+
+      <!-- <a href="/auth/google" class="google-btn" data-aos="zoom-in" data-aos-delay="100">
+        <img data-aos="zoom-in" data-aos-delay="200" src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google logo" />
+        <span>Continue with Google</span>
+      </a> -->
+
+      <center><div data-aos="zoom-in" data-aos-delay="300" class="register-link" >
+        Don't have an account? <a href="/register">Register</a>
+      </div></center>
+    </div>
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-buttons button').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      document.getElementById(tabId.replace("Tab", "Btn")).classList.add('active');
+    }
+  </script>
+
+      
+<!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 800, // animation duration
+        once: true,     // animation only once
+        offset: 120     // offset (in px) from the original trigger point
+      });
+    </script>
+
+
+</body>
+</html>

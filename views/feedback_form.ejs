@@ -1,0 +1,131 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback – QueueSys</title>
+  <script src="https://www.google.com/recaptcha/api.js?render=<%= siteKey %>"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #eef1f6;
+    }
+    .feedback-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      font-size: 26px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="email"], select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      margin-top: 6px;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .rating {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 12px;
+    }
+    .rating input[type="radio"] {
+      display: none;
+    }
+    .rating label {
+      font-size: 24px;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .rating input:checked ~ label,
+    .rating label:hover,
+    .rating label:hover ~ label {
+      color: #f7b731;
+    }
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      background-color: #28a745;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    @media (max-width: 600px) {
+      .feedback-container {
+        padding: 20px;
+        margin: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="feedback-container">
+    <h2>We’d love your feedback</h2>
+    <form id="feedbackForm" action="/feedback" method="POST">
+      <input type="hidden" name="recaptchaToken" id="recaptchaToken" />
+      <input type="hidden" name="role" value="<%= role %>" />
+
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" value="<%= email %>" required />
+
+      <label for="reason">Why are you leaving?</label>
+      <select name="reason" id="reason" required>
+        <option value="" disabled selected>Select a reason</option>
+        <option value="Not useful">Not useful</option>
+        <option value="Difficult to use">Difficult to use</option>
+        <option value="Switched to other system">Switched to other system</option>
+        <option value="Temporary usage only">Temporary usage only</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label>Rate your experience</label>
+      <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5" required /><label for="star5">★</label>
+        <input type="radio" id="star4" name="rating" value="4" /><label for="star4">★</label>
+        <input type="radio" id="star3" name="rating" value="3" /><label for="star3">★</label>
+        <input type="radio" id="star2" name="rating" value="2" /><label for="star2">★</label>
+        <input type="radio" id="star1" name="rating" value="1" /><label for="star1">★</label>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    grecaptcha.ready(function () {
+      grecaptcha.execute('<%= siteKey %>', { action: 'submit_feedback' }).then(function (token) {
+        document.getElementById('recaptchaToken').value = token;
+      });
+    });
+  </script>
+</body>
+</html> -->

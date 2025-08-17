@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Expired Tokens - Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1.2rem;
+      background-color: #007aff;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    form.filter-form {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    form.filter-form select,
+    form.filter-form button {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    th {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .empty-msg {
+      text-align: center;
+      padding: 2rem;
+      color: #999;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/admin-dashboard" class="back-btn">← Back to Dashboard</a>
+    <h2>Expired Tokens</h2>
+
+    <!-- 🔍 Filter Form -->
+    <form class="filter-form" method="GET">
+      <select name="day">
+        <option value="">Day</option>
+        <% for(let d = 1; d <= 31; d++) { %>
+          <option value="<%= d %>" <%= query && +query.day === d ? 'selected' : '' %>><%= d %></option>
+        <% } %>
+      </select>
+
+      <select name="month">
+        <option value="">Month</option>
+        <% const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; %>
+        <% months.forEach((m, idx) => { %>
+          <option value="<%= idx + 1 %>" <%= query && +query.month === (idx + 1) ? 'selected' : '' %>><%= m %></option>
+        <% }) %>
+      </select>
+
+      <select name="year">
+        <option value="">Year</option>
+        <% const currentYear = new Date().getFullYear(); %>
+        <% for (let y = currentYear; y >= currentYear - 2; y--) { %>
+          <option value="<%= y %>" <%= query && +query.year === y ? 'selected' : '' %>><%= y %></option>
+        <% } %>
+      </select>
+
+      <button type="submit">🔎 Filter</button>
+    </form>
+
+    <% if (expiredTokens.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Phone</th>
+            <th>Booked At</th>
+            <th>Expired At</th>
+          </tr>
+        </thead>
+        <tbody id="expiredTokenTable">
+          <% expiredTokens.forEach(token => { %>
+            <tr>
+              <td>#<%= token.serialNumber %></td>
+              <td><%= token.fullName %></td>
+              <td><%= token.phoneNumber %></td>
+              <td><%= moment(token.timestamp).format("DD MMM YYYY, hh:mm A") %></td>
+              <td><%= moment(token.expiredAt).format("DD MMM YYYY, hh:mm A") %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <div class="empty-msg">No expired tokens found for selected date.</div>
+    <% } %>
+  </div>
+
+  <!-- ✅ Socket.IO Live Updates -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const adminId = "<%= expiredTokens[0]?.adminId || '' %>";
+
+    if (adminId) {
+      socket.emit('joinRoom', adminId);
+    }
+
+    socket.on('expiredTokenUpdate', (token) => {
+      const table = document.getElementById("expiredTokenTable");
+      if (table) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>#${token.serialNumber}</td>
+          <td>${token.fullName}</td>
+          <td>${token.phoneNumber}</td>
+          <td>${new Date(token.timestamp).toLocaleString()}</td>
+          <td>${new Date(token.expiredAt).toLocaleString()}</td>
+        `;
+        table.prepend(row); // add latest on top
+      }
+    });
+  </script>
+</body>
+
+</html>

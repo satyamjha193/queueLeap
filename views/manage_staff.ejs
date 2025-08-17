@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Staff</title>
+  <link rel="stylesheet" href="/Stylesheets/manageStaff.css">
+</head>
+<body>
+  <div class="main-content">
+    <h1>Manage Staff</h1>
+    <p class="subtitle">Staff administration and performance management</p>
+
+    <div class="report-header">
+      <div class="card green">12<br><small>Total Staff</small></div>
+      <div class="card blue">8<br><small>On Duty</small></div>
+      <div class="card orange">3<br><small>On Break</small></div>
+      <div class="card purple">91%<br><small>Avg Performance</small></div>
+    </div>
+
+    <div class="staff-section">
+      <h2>Staff Management</h2>
+      <div class="search-add">
+        <input type="text" placeholder="Search staff..." />
+        <button class="add-btn">+ Add Staff</button>
+      </div>
+
+      <div class="staff-table">
+        <div class="staff-row heading">
+          <div>Staff Member</div>
+          <div>Role & Counter</div>
+          <div>Status</div>
+          <div>Shift</div>
+          <div>Performance</div>
+          <div>Actions</div>
+        </div>
+
+        <!-- Staff rows -->
+        <div class="staff-row">
+          <div><span class="avatar">AJ</span> Alice Johnson<br><small>alice@company.com</small></div>
+          <div>Senior Agent<br>Counter 1</div>
+          <div><span class="status-dot green"></span> Available</div>
+          <div>9:00 AM - 5:00 PM</div>
+          <div><span class="perf">95%</span><span class="bar green"></span></div>
+          <div class="actions">
+            <button>⏱</button><button>✏️</button><button>🗑️</button>
+          </div>
+        </div>
+
+        <div class="staff-row">
+          <div><span class="avatar">BS</span> Bob Smith<br><small>bob@company.com</small></div>
+          <div>Agent<br>Counter 2</div>
+          <div><span class="status-dot red"></span> Busy</div>
+          <div>9:00 AM - 5:00 PM</div>
+          <div><span class="perf">88%</span><span class="bar yellow"></span></div>
+          <div class="actions">
+            <button>⏱</button><button>✏️</button><button>🗑️</button>
+          </div>
+        </div>
+
+        <div class="staff-row">
+          <div><span class="avatar">CD</span> Carol Davis<br><small>carol@company.com</small></div>
+          <div>Senior Agent<br>Counter 3</div>
+          <div><span class="status-dot yellow"></span> On Break</div>
+          <div>10:00 AM - 6:00 PM</div>
+          <div><span class="perf">92%</span><span class="bar blue"></span></div>
+          <div class="actions">
+            <button>⏱</button><button>✏️</button><button>🗑️</button>
+          </div>
+        </div>
+
+        <div class="staff-row">
+          <div><span class="avatar">DW</span> David Wilson<br><small>david@company.com</small></div>
+          <div>Agent<br>Counter 4</div>
+          <div><span class="status-dot green"></span> Available</div>
+          <div>8:00 AM - 4:00 PM</div>
+          <div><span class="perf">85%</span><span class="bar yellow"></span></div>
+          <div class="actions">
+            <button>⏱</button><button>✏️</button><button>🗑️</button>
+          </div>
+        </div>
+
+        <div class="staff-row">
+          <div><span class="avatar">EB</span> Eva Brown<br><small>eva@company.com</small></div>
+          <div>Supervisor<br>All Counters</div>
+          <div><span class="status-dot green"></span> Available</div>
+          <div>9:00 AM - 5:00 PM</div>
+          <div><span class="perf">98%</span><span class="bar green"></span></div>
+          <div class="actions">
+            <button>⏱</button><button>✏️</button><button>🗑️</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-links">
+      <div class="link-card">📅 Schedule Management<br><small>Manage staff schedules and shifts</small></div>
+      <div class="link-card">📈 Performance Reports<br><small>View detailed staff performance</small></div>
+      <div class="link-card">🎓 Training Programs<br><small>Manage staff training and development</small></div>
+    </div>
+  </div>
+  <script src=""></script>
+
+</body>
+</html>

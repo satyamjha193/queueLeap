@@ -1,0 +1,591 @@
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+/* === Salon Header === */
+header {
+  background: linear-gradient(135deg, #813141, #0f0f01);
+  color: white;
+  padding: 3rem 1rem;
+  text-align: center;
+  /* margin: 1rem; */
+}
+
+.badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+header h1 span {
+  color: #f9c8dc;
+}
+
+header p {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* === Search === */
+.search-wrapper-container {
+  margin: 2rem auto 0;
+  max-width: 600px;
+  padding: 0 1rem;
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  padding: 7px;
+  border-radius: 10px;
+}
+
+.search-wrapper input {
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  width: 300px;
+  font-size: 1rem;
+  outline: none;
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-wrapper button {
+  background-color: #5d222a;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 1rem;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+}
+
+/* === Top Section === */
+.top-section {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 2rem 1rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  width: 250px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* === Button Card === */
+.find-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.near-you-btn {
+   background: linear-gradient(135deg, #813141, #0f0f01);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s ease;
+}
+
+.near-you-btn:hover {
+  background: linear-gradient(135deg, #9f3a50, #583543);
+  transform: translateY(-2px);
+}
+
+/* === Cards Container === */
+.centeralised-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+  gap: 1.5rem;
+}
+
+/* === Salon Card === */
+/* .hospital-card {
+  background-color: #fff;
+  width: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+} */
+
+
+.hospital-card {
+  background-color: #b50e0e;
+  width: calc(50% - 12px); /* 2 cards in row with 24px gap */
+  border-radius: 16px;
+  display: block;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+/* Mobile (1 per row) */
+@media (max-width: 767px) {
+  .hospital-card {
+    width: 100%;
+  }
+}
+
+
+.hospital-card:hover {
+  transform: translateY(-5px);
+}
+
+.hospital-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* === Card Info === */
+.hospital-info {
+  padding: 20px;
+}
+
+.hospital-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.hospital-info p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+/* === Queue Status === */
+.queue-info {
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.queue-info.light {
+  background-color: #e0f7e9;
+  color: #065f46;
+}
+
+.queue-info.moderate {
+  background-color: #fff3cd;
+  color: #92400e;
+}
+
+.queue-info.busy {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* === Progress Bar === */
+.wait-bar {
+  width: 100%;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(to right, #4ade80, #22c55e);
+  transition: width 0.4s ease, background 0.4s ease;
+}
+.fill-0 { width: 0%; }
+.fill-10 { width: 10%; }
+.fill-20 { width: 20%; }
+/* ... */
+.fill-100 { width: 100%; }
+
+/* === Status Badge === */
+.shop-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.shop-status.open {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.shop-status.closed {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-indicator {
+  font-size: 0.6rem;
+  margin-right: 6px;
+}
+
+.shop-status.open .status-indicator {
+  color: green;
+  animation: blink 1s infinite;
+}
+
+.shop-status.closed .status-indicator {
+  color: red;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+/* === Book Now Button === */
+.btn {
+  display: inline-block;
+  background-color: #111827;
+  color: white;
+  padding: 10px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-top: 12px;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #374151;
+}
+
+/* === Footer === */
+.footer-banner {
+  background: linear-gradient(135deg, #813141, #0f0f01);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 4rem;
+}
+
+.wave-top svg {
+  display: block;
+  width: 100%;
+  height: 120px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.footer-content {
+  position: relative;
+  padding-top: 140px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.footer-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.footer-content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.footer-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.footer-buttons button {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  header {
+    margin: 0;
+  }
+  .top-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    width: 90%;
+  }
+  .hospital-card {
+    width: 90%;
+  }
+  .centeralised-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-content h2 {
+    font-size: 1.5rem;
+  }
+  .footer-content p {
+    font-size: 1rem;
+  }
+  .footer-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+
+
+
+
+/* how it works section below the header part */
+
+
+
+.ql-section {
+      padding: 3rem 1rem;
+      text-align: center;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .ql-section-title {
+      font-size: 2rem;
+      color: #7c2137;
+      margin-bottom: 1rem;
+    }
+
+    .ql-section-subtitle {
+      max-width: 720px;
+      margin: 0 auto;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .ql-card-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      .ql-card-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (min-width: 640px) and (max-width: 1023px) {
+      .ql-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 639px) {
+      .ql-card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ql-feature-card {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      text-align: left;
+      min-height: 190px;
+    }
+
+    .ql-feature-card:hover {
+      box-shadow: 0 6px 18px rgba(124, 33, 55, 0.25);
+    }
+
+    .ql-icon-box {
+      background-color: #7c2137;
+      color: white;
+      padding: 8px;
+      border-radius: 50%;
+      font-size: 1rem;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+
+    .ql-feature-card h3 {
+      font-size: 0.95rem;
+      margin: 0.2rem 0;
+      color: #1a1a1a;
+      transition: color 0.3s ease;
+    }
+
+    .ql-feature-card:hover h3 {
+      color: #7c2137;
+    }
+
+    .ql-feature-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.3rem 0 0;
+    }
+
+    .ql-feature-card ul li {
+      font-size: 0.82rem;
+      color: #444;
+      margin: 2px 0;
+    }
+
+    /* How It Works Section */
+    .ql-how-it-works {
+      background: #fdf7f8;
+      padding: 3rem 1rem;
+      border-radius: 20px;
+      margin: 3rem auto;
+      max-width: 1300px;
+     
+    }
+
+
+    .ql-how-title {
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      color: #7c2137;
+    }
+
+    .ql-steps-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .ql-steps-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    .ql-step-box {
+      flex: 1;
+    }
+
+    .ql-step-number {
+      background: #7c2137;
+      color: white;
+      width: 48px;
+      height: 48px;
+      line-height: 48px;
+      border-radius: 50%;
+      margin: 0 auto 0.8rem;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .ql-step-box h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+      color: #111;
+    }
+
+    .ql-step-box p {
+      font-size: 0.85rem;
+      color: #555;
+      margin: 0;
+    }
+
+
+
+
+.nearby-shops-section {
+  background-color: #fff;
+  padding: 4rem 1rem 2rem;
+  text-align: center;
+}
+
+.nearby-shops-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.nearby-title {
+  font-size: 2rem;
+   color: #7c2137;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.nearby-subtitle {
+  font-size: 1rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}

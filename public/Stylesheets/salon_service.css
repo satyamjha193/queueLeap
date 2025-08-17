@@ -1,0 +1,585 @@
+  /* For smoother animation experience */
+html {
+  scroll-behavior: smooth;
+}
+
+.modal-content {
+  will-change: transform;
+}
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+
+  body {
+    background: #f3f4f6;
+    padding: 20px;
+    color: #1f2937;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .header {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .subheader {
+    color: #6b7280;
+    margin-bottom: 20px;
+  }
+
+  .status {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 15px;
+     background: linear-gradient(135deg, #d1fae5, #111827);
+    /* background: linear-gradient(135deg, #c49a6c, #8d6748); */
+    /* background: linear-gradient(135deg, #d1fae5, #111827); */
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  .status > div {
+    margin-bottom: 10px;
+    flex: 1 1 30%;
+    text-align: center;
+  }
+
+  .status-value {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .live-updates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+
+  .token-update {
+    flex: 1 1 30%;
+    min-width: 240px;
+    height: 120px;
+    background: #f3f4f6;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease;
+    text-align: center;
+  }
+
+  .token-update:hover {
+    transform: translateY(-4px);
+  }
+
+  .update-now {
+    background: #ecfccb;
+    color: #365314;
+  }
+
+  .update-completed {
+    background: #e0f2fe;
+    color: #0c4a6e;
+  }
+
+  .update-new {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .hospital-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .rating span {
+    margin-left: 5px;
+    color: #888;
+  }
+
+  .info-detail {
+    margin: 10px 0;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .tag {
+    background: #eaf0ff;
+    color: #2c3e50;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 5px;
+  }
+
+  .tag.emergency {
+    background: #ff4d4d;
+    color: white;
+  }
+
+
+
+/* Form Section with BOOK TOKEN and DELETE TOKEN */
+.form-book-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+}
+
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.form-box {
+  flex: 1;
+  min-width: 280px;
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-box h4 {
+  margin-bottom: 12px;
+  color: #dc3545;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.book-btn {
+  background-color: #007bff;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+}
+
+.status-box {
+  margin-top: 30px;
+  padding: 16px;
+  background-color: #e6f7ff;
+  border-left: 6px solid #007bff;
+  border-radius: 8px;
+}
+
+.status-box h4 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: #004085;
+}
+
+.flash-message {
+  margin-bottom: 15px;
+  padding: 10px 16px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.flash-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 5px solid #dc3545;
+}
+
+.flash-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 5px solid #28a745;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    flex-direction: column;
+  }
+
+  .form-box {
+    width: 100%;
+  }
+}
+
+
+  
+/* Map section */
+  .map-section {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-top: 30px;
+  }
+
+  .map-section .header {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .map-section p {
+    color: #4b5563;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .map-container {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  i {
+    margin-right: 6px;
+  }
+
+  @media (max-width: 768px) {
+    .status {
+      flex-direction: column;
+    }
+
+    .live-updates {
+      flex-direction: column;
+    }
+
+    .token-update {
+      width: 100%;
+      height: auto;
+    }
+
+    .form-fields input,
+    .form-section button {
+      width: 100%;
+    }
+
+    .form-fields,
+    .status-box {
+      flex: 1 1 100%;
+    }
+
+    .status-box {
+      margin-bottom: 0;
+    }
+  }
+
+
+
+.blinking-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 8px;
+  border-radius: 50%;
+  background-color: #22c55e; /* Tailwind's green-500 */
+  animation: blink 1s infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.last-update {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+  @media (max-width: 600px) {
+    .stat-card {
+      flex: 1 1 100%;
+    }
+  }
+
+
+  
+  /* QR code  */
+  .modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ .modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+  .modal-content h3 {
+    font-size: 1.8rem;
+    color: #10b981;
+    margin-bottom: 1rem;
+  }
+
+  .modal-content p {
+    font-size: 1.05rem;
+    margin-bottom: 0.7rem;
+    color: #333;
+  }
+
+.modal-content img {
+  margin: 20px 0;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+  
+/* Button container styling */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Buttons */
+.modal-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-buttons button:hover {
+  background-color: #1e4ed8;
+}
+
+.modal-buttons a button {
+  background-color: #10b981;
+}
+
+.modal-buttons a button:hover {
+  background-color: #0e9f6e;
+}
+
+
+  @keyframes fadeSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .modal-content {
+      padding: 1.2rem;
+    }
+  }
+
+
+
+/* Flash message for similar number booking avoidance */
+.flash-message {
+  background-color: #ffeeba;
+  color: #856404;
+  padding: 12px 20px;
+  border: 1px solid #ffeeba;
+  border-left: 6px solid #f5c000;
+  margin: 15px 0;
+  position: relative;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.flash-message .close-btn {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  color: #856404;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+/* delete token flash message */
+
+.flash-message {
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  border-left: 6px solid #f5c000;
+  margin: 15px 0;
+  position: relative;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.flash-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left-color: #28a745;
+}
+
+.flash-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left-color: #dc3545;
+}
+
+.flash-message .close-btn {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+
+
+/* Real time updates of queue {current token serving , new token added,} */
+.live-updates {
+  margin-top: 25px;
+  background-color: #f0f8ff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+}
+
+.token-update {
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border-left: 5px solid #ccc;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.token-update i {
+  color: #555;
+}
+
+/* Color coding */
+.update-now {
+  border-color: #007bff;
+  background-color: #e6f0ff;
+  color: #004085;
+}
+
+.update-completed {
+  border-color: #28a745;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.update-new {
+  border-color: #ffc107;
+  background-color: #fff3cd;
+  color: #856404;
+}
+.token-update {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+
+

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Queuesys Admin Registration Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/Stylesheets/admin_registration.css" />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"> </script>
+   <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="registration-wrapper">
+    <!-- Left Side: Illustration or Banner -->
+    <div class="left-banner">
+     <p data-aos="zoom-in" data-aos-delay="0">welcome to QueueLeap</p>
+      <h2 data-aos="zoom-in" data-aos-delay="100" style="color: white;">QueueLeap</h2>
+      <p data-aos="zoom-in" data-aos-delay="200">Register your clinic or shop and start managing queues efficiently!</p>
+      <button data-aos="zoom-in" data-aos-delay="300" id="backToStep1Btn" class="btn small-btn" style="margin-top: 15px; display: none;">
+        ← Back to Step 1
+      </button>
+
+    </div>
+
+  <div class="subscription-preview">
+  <h5 data-aos="zoom-in" data-aos-delay="100" class="subscription-title">See Our Subscription</h5>
+  <div data-aos="zoom-in" data-aos-delay="200" class="subscription-message">
+    Explore our flexible plans to suit every need. Toggle above to view pricing monthly or yearly.
+  </div>
+  <div class="subscription-link">
+    <a data-aos="zoom-in" data-aos-delay="300" href="/admin-subcription-plans" class="view-plans-btn">View Plans</a>
+  </div>
+</div>
+
+    
+
+    <!-- Right Side: Form -->
+    <div class="container">
+      <div class="step-indicator">
+        <span data-aos="zoom-in" data-aos-delay="0" class="step active">1</span>
+        <span data-aos="zoom-in" data-aos-delay="100" class="step-line"></span>
+        <span data-aos="zoom-in" data-aos-delay="200" class="step">2</span>
+      </div>
+
+      <h2 data-aos="zoom-in" data-aos-delay="100">Admin Registration</h2>
+
+      <div class="trial-banner" data-aos="zoom-in" data-aos-delay="100">
+        <i class="fas fa-gift"></i>
+        <div>
+          <strong >1-Month Free Trial:</strong> You’ll get all premium features free for the first 30 days. After that, you can upgrade to a subscription plan.
+        </div>
+      </div>
+
+     
+     <!-- ✅ Email Registration Form -->
+<form id="emailForm" method="post" action="/register/dashboard" enctype="multipart/form-data">
+  <!-- Row 1: Admin Name + Sector -->
+  <div class="form-row" data-aos="zoom-in" data-aos-delay="100">
+    <div class="input-group">
+      <i class="fas fa-user"></i>
+      <input type="text" name="name" placeholder="Admin Name" required />
+    </div>
+    
+
+      <div class="input-group">
+  <i class="fas fa-building"></i>
+  <select name="sectorname" id="sectorDropdown" required>
+    <option value="" disabled selected>Select Sector</option>
+    <optgroup label="Medical">
+      <option value="clinic">Clinic</option>
+      <option value="hospital">Hospital</option>
+      <option value="others">Others (Medicals)</option>
+    </optgroup>
+    <optgroup label="Beauty">
+      <option value="salon">Salon</option>
+    </optgroup>
+  </select>
+</div>
+
+<!-- This input will show only if "others" is selected -->
+<div class="input-group" id="otherSectorInput" style="display: none;">
+  <i class="fas fa-pencil-alt"></i>
+  <input type="text" name="other_sectorname" placeholder="Enter other sector name" />
+</div>
+
+  </div>
+
+  <!-- Row 2: Shop Name + Address -->
+  <div class="form-row" data-aos="zoom-in" data-aos-delay="200">
+    <div class="input-group">
+      <i class="fas fa-store"></i>
+      <input type="text" name="shopname" placeholder="Shop Name" required />
+    </div>
+    <div class="input-group">
+      <i class="fas fa-map-marker-alt"></i>
+      <input type="text" name="shopaddress" id="shopaddress" placeholder="Shop Address" required />
+      <p id="address-status" style="font-size: 14px; color: #2563eb; margin-left: 8px; margin-top: -12px;"></p>
+    </div>
+  </div>
+  
+
+  <!-- Row 3: Specialist + Phone -->
+  <div class="form-row" data-aos="zoom-in" data-aos-delay="300">
+    <div class="input-group">
+      <i class="fas fa-user-md"></i>
+      <input type="text" name="specialist" placeholder="Specialist (e.g., Cardiology)" required />
+    </div>
+    <div class="input-group">
+      <i class="fas fa-phone"></i>
+      <input type="text" name="phone" placeholder="Phone Number" required />
+    </div>
+  </div>
+
+  <!-- Row 4: Image Upload + Email -->
+  <div class="form-row" data-aos="zoom-in" data-aos-delay="400">
+    <div class="input-group">
+      <i class="fas fa-image"></i>
+      <input type="file" name="shopImage" accept="image/*" required />
+    </div>
+    <div class="input-group">
+      <i class="fas fa-envelope"></i>
+      <input type="email" name="email" placeholder="Email" required />
+    </div>
+  </div>
+
+  <!-- Row 5: Password + About Clinic -->
+  <div class="form-row" data-aos="zoom-in" data-aos-delay="500">
+    <div class="input-group">
+      <i class="fas fa-lock"></i>
+      <input type="password" name="password" placeholder="Password" required />
+    </div>
+    <div class="input-group">
+      <i class="fas fa-comment-dots"></i>
+      <textarea name="aboutClinic" rows="2" placeholder="Write about your clinic in 1–2 lines..." required></textarea>
+    </div>
+  </div>
+
+  <!-- Row 6: Timings + Estimated Wait -->
+  <div class="form-row" data-aos="zoom-in" data-aos-delay="600">
+    <div class="input-group">
+      <i class="fas fa-clock"></i>
+      <input type="text" name="shoptimings" placeholder="Shop Timings" required />
+    </div>
+    <div class="input-group custom-dropdown">
+      <i class="fas fa-hourglass-half"></i>
+      <select name="estimatedWaitTime" required class="pretty-select">
+        <option value="">Select Estimated Wait Time</option>
+        <option value="0–10 min">0–10 min</option>
+        <option value="10–20 min">10–20 min</option>
+        <option value="20–30 min">20–30 min</option>
+        <option value="30–40 min">30–40 min</option>
+        <option value="40–50 min">40–50 min</option>
+        <option value="50–60 min">50–60 min</option>
+      </select>
+      <span class="dropdown-arrow"></span>
+    </div>
+  </div>
+
+  <!-- Map Section -->
+  <div class="map-section" data-aos="zoom-in" data-aos-delay="400">
+    <label><strong>Select your shop/clinic location on map:</strong></label>
+    <div id="map"></div>
+    <br />
+
+    <div class="form-row">
+      <div class="input-group">
+        <i class="fas fa-globe"></i>
+        <input type="text" id="lat" name="lat" placeholder="Latitude" required readonly />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-globe"></i>
+        <input type="text" id="lng" name="lng" placeholder="Longitude" required readonly />
+      </div>
+    </div>
+    <input type="hidden" name="locationMapUrl" id="locationMapUrl" />
+  </div>
+
+  <!-- Submit -->
+  <button data-aos="zoom-in" data-aos-delay="100" class="btn" type="button" onclick="handleOtpRequest()">Send OTP to Email</button>
+<center>
+  <div  class="login-link">Already registered? <a href="/login">Login here</a></div></center>
+</form>
+
+
+      <!-- STEP 2: OTP & Subscription Preview -->
+      <div id="step2-section" style="display: none; animation: fadeIn 0.5s;">
+        <h3 style="color: #1e3a8a;">Step 2: Verify & Subscribe </h3>
+
+        <form id="emailOtpForm" style="margin-top: 20px;">
+          <div class="input-group" data-aos="zoom-in" data-aos-delay="200">
+            <i class="fas fa-key"></i>
+            <input type="text" id="emailOtp" placeholder="Enter OTP from Email" required />
+          </div>
+          <button class="btn" type="submit">Verify & Register</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  <div id="loadingSpinner" style="
+  display: none;
+  text-align: center;
+  margin-top: 30px;
+">
+  <div style="
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  "></div>
+  <p style="
+    margin-top: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #555;
+    font-size: 16px;
+  ">
+    Processing registration, please wait...
+  </p>
+</div>
+
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+<script>
+  document.getElementById('emailForm').addEventListener('submit', function () {
+    document.getElementById('loadingSpinner').style.display = 'block';
+  });
+</script>
+
+
+
+
+
+
+
+
+
+<script src="/javascripts/admin_registration.js"></script>
+  
+<!-- AOS JS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800, // animation duration
+    once: true,     // animation only once
+    offset: 120     // offset (in px) from the original trigger point
+  });
+</script>
+
+
+<script>
+  const dropdown = document.getElementById('sectorDropdown');
+  const otherInputGroup = document.getElementById('otherSectorInput');
+
+  dropdown.addEventListener('change', function () {
+    if (this.value === 'others') {
+      otherInputGroup.style.display = 'flex'; // or 'block' depending on your CSS
+    } else {
+      otherInputGroup.style.display = 'none';
+    }
+  });
+</script>
+</body>
+
+</html>

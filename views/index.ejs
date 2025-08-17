@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- AOS Animation CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <title>Queue Management System</title>
+    <link rel="stylesheet" href="./Stylesheets/main.css">
+</head>
+<body data-loggedin="<%= isLoggedIn ? 'true' : 'false' %>">
+
+
+  
+    <!-- Navigation Bar -->
+<header>
+  <nav class="navbar animated-nav">
+    <div class="navbar-logo">
+      <i class="fas fa-clipboard-list"></i> <span>QueueLeap</span>
+    </div>
+
+    <ul class="navbar-links" id="navbarLinks">
+      <div class="mobile-close" id="mobileClose">
+        <i class="fas fa-times"></i>
+      </div>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/about">About</a></li>
+     
+      <li><a href="/services">Services</a></li>
+      <!-- <li><a href="/contact">Contact</a></li> -->
+       <li><a href="#" onclick="scrollToContact(); return false;">Contact</a></li>
+
+    </ul>
+
+    <div class="navbar-actions">
+      <a href="/admin-subcription-plans" class="action-button">
+        <i class="fas fa-credit-card"></i> Subscriptions
+      </a>
+      <a href="/login" id="adminLink" class="action-button">
+        <i class="fas fa-user-shield"></i> Admin
+      </a>
+      <div class="hamburger" id="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<% if (typeof message !== 'undefined' && message) { %>
+  <div id="flash-msg" class="flash-popup"><%= message %></div>
+<% } %>
+
+
+
+
+
+<section id="roleSelectionSection" class="qs-modal-overlay">
+  <div class="qs-modal-box">
+    <span class="qs-close-btn" onclick="closeAllModals()">&times;</span>
+    <h2 class="qs-title">Join QueueLeap</h2>
+    <p class="qs-subtext">Choose how you want to get started with our platform</p>
+    <div class="qs-role-buttons">
+      <button onclick="openAdminModal()" class="qs-role-btn">I'm an Admin</button>
+      <button onclick="openUserModal()" class="qs-role-btn">I'm a Customer</button>
+    </div>
+    <p class="qs-note">Not sure? You can read <a href="/about">About us.</a></p>
+  </div>
+</section>
+
+<section id="adminRegisterSection" class="qs-modal-overlay">
+  <div class="qs-modal-box">
+    <span class="qs-close-btn" onclick="closeAllModals()">&times;</span>
+    <div class="qs-modal-icon">⚙️</div>
+    <h2 class="qs-title">Admin Registration</h2>
+    <p class="qs-subtext">Set up your shop management account</p>
+    <p class="qs-role-desc">Registration form will be implemented here for <strong>admin</strong> role.</p>
+        <a href="/register" class="qs-continue-btn" style="color: white;text-decoration:none;">Continue Registration</a>
+  </div>
+</section>
+
+<section id="customerRegisterSection" class="qs-modal-overlay">
+  <div class="qs-modal-box">
+    <span class="qs-close-btn" onclick="closeAllModals()">&times;</span>
+    <div class="qs-modal-icon">👤</div>
+    <h2 class="qs-title">Customer Registration</h2>
+    <p class="qs-subtext">Join QueueLeap to skip the wait</p>
+    <p class="qs-role-desc">Registration form will be implemented here for <strong>user</strong> role.</p>
+    <a href="/user_register" class="qs-continue-btn" style="color: white;text-decoration:none;">Continue Registration</a>
+  </div>
+</section>
+
+
+
+
+
+<div class="slider-wrapper">
+  <div class="slider fade-in-slider" id="imageSlider">
+    <img class="visible"  src="./images/pexels-cottonbro-7578803.jpg" alt="">
+    <!-- <img class="visible" src="./images/pexels-jazmine-film-318822108-18559249.jpg" alt=""> -->
+    <img src="./images/pexels-pavel-danilyuk-7658189.jpg" alt="">
+    <img src="./images/pexels-rdne-7697390.jpg" alt="">
+    <img src="./images/pexels-thiagopatrevita-1121482.jpg" alt="">
+    <img src="./images/pexels-weekendplayer-735869.jpg" alt="">
+    <div class="caption fade-in-caption">
+      <h1 style="color: white;">Digital Queue Management System</h1>
+      <p>Real Time token based queue management system. Avoid crowd, maintain your queue digitally and save your precious time.</p>
+      <button id="getStartedBtn" class="qs-get-started-btn" onclick="triggerRoleSelection()">Get Started</button>
+
+    </div>
+  </div>
+</div>
+
+
+
+ <section class="about-section" id="about">
+  <div class="about-container">
+    <h1 style="color: rgb(42, 42, 125);font-weight:100;" data-aos="zoom-in" data-aos-delay="100">About Our Digital Queue Management System</h1>
+    <p class="fade-item">
+      Our Digital Queue Management System is a modern, technology-driven platform designed to transform the traditional queuing experience into a streamlined, efficient, and user-friendly process. Developed with precision and purpose, the system enables users to book service tokens in real-time, track their queue status via QR links, and receive live updates through SMS and email notifications. Whether serving hospitals, banks, government institutions, or customer-facing businesses, the platform ensures smooth and transparent service delivery while significantly reducing physical wait times.
+    </p>
+    <p class="fade-item">
+      With a clean and elegant user interface tailored for both desktop and mobile devices, the system offers intuitive navigation, responsive layouts, and a visually refined dark aesthetic that enhances usability. For administrators, real-time dashboards provide full control over queue flow—allowing them to manage, pause, resume, or fast-track queues as needed. The system also supports multi-authentication methods including phone OTP, Google Sign-In, and email registration, ensuring secure access for every stakeholder.
+    </p>
+    <p class="fade-item">
+      Designed for adaptability and scalability, our solution caters to a wide range of service environments with minimal setup and maximum flexibility. It represents a future-forward approach to service management—enhancing customer satisfaction, operational efficiency, and digital transformation.
+    </p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+<section class="how-it-works-section" id="how-it-works">
+  <div class="how-it-works-container">
+    <h1 style="color: rgb(42, 42, 125); font-weight: 100;" data-aos="zoom-in" data-aos-delay="100">
+      How QueueSystem Works
+    </h1>
+
+    <div class="steps-wrapper">
+      <div class="step-box fade-item">
+        
+        <h3 data-aos="zoom-in" data-aos-delay="200">1. Book a Token</h3>
+        <p data-aos="zoom-in" data-aos-delay="300">Users choose their service provider and book a token in real-time via web or mobile. A confirmation with estimated wait time is instantly shared.</p>
+      </div>
+
+      <div class="step-box fade-item">
+        
+        <h3 data-aos="zoom-in" data-aos-delay="200">2. Track Queue Status</h3>
+        <p data-aos="zoom-in" data-aos-delay="300">Each user gets a live tracking link (QR/SMS/email) to monitor their position in the queue—no more physical waiting.</p>
+      </div>
+
+      <div class="step-box fade-item">
+        
+        <h3 data-aos="zoom-in" data-aos-delay="300">3. Get Notified & Served</h3>
+        <p data-aos="zoom-in" data-aos-delay="300">Once their turn approaches, users receive real-time alerts. Admins can manage queues dynamically from the dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <h1 style="font-weight:100;" data-aos="zoom-in" data-aos-delay="100">Welcome to QueueLeap — The Future of Waiting</h1>
+  <div class="intro" data-aos="zoom-in" data-aos-delay="100">
+    We help businesses and services eliminate long lines through digital queue booking. Whether you run a hospital, salon, college, or government office, SmartQueue allows your visitors to book tokens online, receive live updates, and enjoy a smooth, organized experience.
+  </div>
+
+  <div class="sectors-grid">
+
+
+
+
+        <!-- Salon -->
+    <div class="sector-container" data-aos="zoom-in" data-aos-delay="200">
+      <div class="sector-image">
+        <img src="https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800" alt="Salon" />
+      </div>
+      <div class="sector-content">
+        <h2>Salons & Spas</h2>
+        <p>
+          Let your customers relax from the start. Our system eliminates crowded lobbies and helps your salon deliver a premium, wait-free experience.
+          <span class="more-text">
+            Customers can schedule their slot before arriving—just with their name and phone number. Real-time SMS alerts keep them informed, while QR dashboards at your outlet show upcoming bookings and service availability. Owners can manage appointments, control break timings, and analyze customer patterns to optimize staff availability.
+          </span>
+        </p>
+        <button class="read-more-btn" onclick="toggleMore(this)">Read More</button>
+        
+      </div>
+    </div>
+
+
+
+    <!-- Hospital -->
+    <div class="sector-container" data-aos="zoom-in" data-aos-delay="100">
+      <div class="sector-image">
+        <img src="https://images.pexels.com/photos/1170979/pexels-photo-1170979.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800" alt="Hospital" />
+      </div>
+      <div class="sector-content">
+        <h2>Hospitals, Clinics & Diagnostics</h2>
+        <p>
+          Say goodbye to long hospital queues and chaotic waiting areas. Our smart queue management system streamlines the patient experience from the moment they decide to visit.
+          <span class="more-text">
+            Patients can book tokens online using their phone, saving hours of waiting. Once booked, they receive real-time SMS updates and can track their position in the queue using QR codes displayed on hospital walls or digital screens. Admins get full control over daily queues, can prioritize emergency cases, and manage multiple service desks with ease.
+          </span>
+        </p>
+        <button class="read-more-btn" onclick="toggleMore(this)">Read More</button>
+       
+      </div>
+    </div>
+
+
+
+
+<!-- barber -->
+<div class="sector-container" data-aos="zoom-in" data-aos-delay="300">
+  <div class="sector-image">
+    <img src="https://images.pexels.com/photos/3993446/pexels-photo-3993446.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800" alt="Barber Shop" />
+  </div>
+  <div class="sector-content">
+    <h2>Barber Shops</h2>
+    <p>
+      Modernize your barbershop experience with a digital queue that keeps customers waiting less and coming back more.
+      <span class="more-text">
+        Customers can reserve a haircut slot online and skip the awkward lobby wait. SMS reminders, QR status tracking, and staff notifications ensure smoother flow during busy hours. Whether it's a quick trim or a grooming session, this system makes walk-ins and bookings stress-free.
+      </span>
+    </p>
+    <button class="read-more-btn" onclick="toggleMore(this)">Read More</button>
+   
+  </div>
+</div>
+
+
+
+<!-- cinic -->
+
+<div class="sector-container" data-aos="zoom-in" data-aos-delay="400">
+  <div class="sector-image">
+    <img src="https://images.pexels.com/photos/7580258/pexels-photo-7580258.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800" alt="Clinic" />
+  </div>
+  <div class="sector-content">
+    <h2>Private Clinics & Family Doctors</h2>
+    <p>
+      Say goodbye to crowded clinic receptions. Our digital queue solution offers comfort and predictability for your patients.
+      <span class="more-text">
+        Patients can book consultations online, receive SMS alerts, and view live wait status using QR codes. Doctors and staff benefit from time-managed slots, emergency prioritization, and reduced chaos at peak times. Ideal for small clinics, private chambers, or homeopathy practices.
+      </span>
+    </p>
+    <button class="read-more-btn" onclick="toggleMore(this)">Read More</button>
+   
+  </div>
+</div>
+
+
+
+<!-- diagnosis labs -->
+
+<div class="sector-container" data-aos="zoom-in" data-aos-delay="500">
+  <div class="sector-image">
+    <img src="https://images.pexels.com/photos/6823561/pexels-photo-6823561.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800" alt="Diagnostics Lab" />
+  </div>
+  <div class="sector-content">
+    <h2>Diagnostics & Testing Labs</h2>
+    <p>
+      Eliminate crowding and increase precision at your diagnostic center with scheduled token management.
+      <span class="more-text">
+        Patients can choose test slots online and arrive just in time for blood tests, X-rays, scans, or health packages. Labs can manage queues for different services in one dashboard, send automated SMS alerts, and track real-time patient flow using QR-based displays.
+      </span>
+    </p>
+    <button class="read-more-btn" onclick="toggleMore(this)">Read More</button>
+    
+  </div>
+</div>
+
+
+
+
+    <!-- Government -->
+    <div class="sector-container" data-aos="zoom-in" data-aos-delay="600">
+      <div class="sector-image">
+       <img src="https://images.pexels.com/photos/1000740/pexels-photo-1000740.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800" alt="Government Building" />
+
+      </div>
+      <div class="sector-content">
+        <h2>Government Services</h2>
+        <p>
+          Simplify the way citizens access government services. Our queue system brings order, transparency, and efficiency to public offices.
+          <span class="more-text">
+            Whether it's an RTO, Aadhaar center, or municipal office, visitors can reserve tokens online—no need to stand in line for hours. Live updates via SMS and on-site QR boards help users know exactly when it's their turn. Office administrators gain full dashboard control for managing flow, assigning counters, and tracking service efficiency.
+          </span>
+        </p>
+        <button class="read-more-btn" onclick="toggleMore(this)">Read More</button>
+      </div>
+    </div>
+
+    <!-- College -->
+    <div class="sector-container" data-aos="zoom-in" data-aos-delay="700" style="margin: 20px;">
+      <div class="sector-image">
+        <img src="https://images.pexels.com/photos/1181329/pexels-photo-1181329.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800" alt="College" />
+      </div>
+      <div class="sector-content">
+        <h2>College Helpdesks & Admissions</h2>
+        <p>
+          Make campus queues stress-free. Our digital system supports student services like certificate collection, fee queries, document verification, and admissions.
+          <span class="more-text">
+            Students can book a time slot from their phones and arrive just before their turn. This helps avoid long lines, especially during peak admission days or exam sessions. College staff can monitor traffic in real-time and handle high volumes more efficiently.
+          </span>
+        </p>
+        <button class="read-more-btn" onclick="toggleMore(this)">Read More</button>
+      </div>
+    </div>
+
+  </div>
+
+ 
+
+
+
+  <!-- UI Content -->
+   <div class="ui-wrapper">
+  <div class="container">
+    <h2 data-aos="zoom-in" data-aos-delay="200">
+        Select your service sector to book tokens and manage queues efficiently
+    </h2>
+
+    <!-- <p class="subheading"></p> -->
+
+    <div class="cards-wrapper" id="services">
+        <div class="card hospital"  data-aos="zoom-in" data-aos-delay="100">
+          <i class="fas fa-hospital-symbol fa-2x"></i>
+          <h2>Hospital</h2>
+          <p>Medical services and healthcare</p>
+          <button class="hospital_service_page" >Select Service</button>
+        </div>
+
+
+        <div class="card salon"  data-aos="zoom-in" data-aos-delay="400">
+          <i class="fas fa-cut fa-2x"></i>
+          <h2>Salon</h2>
+          <p>Beauty and grooming appointments</p>
+          <a href="/salon" class="buttons" style="text-decoration: none;color:white;">Select Service</a>
+        </div>
+
+
+         <div class="card salon"  data-aos="zoom-in" data-aos-delay="500">
+          <i class="fas fa-cut fa-2x"></i>
+          <h2>College</h2>
+          <p>Student college services</p>
+          <a href="/college" class="buttons" style="text-decoration: none;color:white;">Select Service</a>
+        </div> 
+
+
+        <!-- <div class="card bank"  data-aos="zoom-in" data-aos-delay="200">
+          <i class="fas fa-university fa-2x"></i>
+          <h2>Bank</h2>
+          <p>Banking and financial services</p>
+          <button class="buttons">Select Service</button>
+        </div> -->
+
+        <!-- <div class="card government"  data-aos="zoom-in"  data-aos-delay="300">
+          <i class="fas fa-landmark fa-2x"></i>
+          <h2>Government Services</h2>
+          <p>Public administration and services</p>
+          <button class="buttons">Select Service</button>
+        </div> -->
+<!-- 
+        <div class="card general"  data-aos="zoom-in" data-aos-delay="300">
+          <i class="fas fa-concierge-bell fa-2x"></i>
+          <h2>General Services</h2>
+          <p>Other public services</p>
+          <button class="buttons">Select Service</button>
+        </div> -->
+
+
+        
+       
+
+    </div>
+  </div>
+  </div>
+
+
+
+<section class="why-choose animate-up">
+  <h2 style="font-weight:100;color: #171541; font-size:45px " data-aos="zoom-in" data-aos-delay="300">Why Choose Our Platform?</h2>
+  <p class="subheading">We provide the most comprehensive and up-to-date information about hospitals ,salons and other sectors in your area.</p>
+
+  <div class="feature">
+    <!-- Feature 1 -->
+    <div class="feature-card animate-up">
+      <div class="icon-container green">
+        <i class="fas fa-clock"></i>
+      </div>
+      <h3 data-aos="zoom-in" data-aos-delay="400">Real-time Queue Updates</h3>
+      <p>Get live updates on waiting times and current patient queues at all hospitals.</p>
+    </div>
+
+    <!-- Feature 2 -->
+    <div class="feature-card animate-up">
+      <div class="icon-container blue">
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+      <h3 data-aos="zoom-in" data-aos-delay="400">Location-based Search</h3>
+      <p>Find hospitals near you with distance calculations and easy navigation.</p>
+    </div>
+
+    <!-- Feature 3 -->
+    <div class="feature-card animate-up">
+      <div class="icon-container yellow">
+        <i class="fas fa-star"></i>
+      </div>
+      <h3 data-aos="zoom-in" data-aos-delay="400">Verified Reviews</h3>
+      <p>Read authentic reviews and ratings from verified patients and their families.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Partner Stats -->
+<section class="stats-section animate-up" style=" padding:4px;">
+  <div class="stats-item animate-left">
+    <h2>50+</h2>
+    <p>Service Partners</p>
+  </div>
+  <div class="stats-item animate-up">
+    <h2>100+</h2>
+    <p>Queue Bookings</p>
+  </div>
+  <div class="stats-item animate-right">
+    <h2>95%</h2>
+    <p>Customer Satisfaction</p>
+  </div>
+</section>
+
+<!-- Main Feature Section -->
+<section class="main-section">
+  <!-- Left: Features -->
+  <div class="features animate-left">
+    <h2>Built for Modern Service Environments</h2>
+    <p>Our platform serves hospitals, banks, government institutions, and customer-facing businesses with minimal setup and maximum flexibility.</p>
+
+    <div class="feature-item">
+      
+      <div><i class="fas fa-check-circle"></i>
+        <strong>Multi-Authentication Support</strong><br/>
+        Phone OTP, Google Sign-In, and email registration
+      </div>
+    </div>
+    <div class="feature-item">
+      
+      <div><i class="fas fa-check-circle"></i>
+        <strong>Admin Dashboard</strong><br/>
+        Real-time control to manage, pause, or fast-track queues
+      </div>
+    </div>
+    <div class="feature-item">
+      
+      <div><i class="fas fa-check-circle"></i>
+        <strong>QR Code Integration</strong><br/>
+        Quick access via QR links for seamless user experience
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Rating Box -->
+  <div class="rating-box animate-right">
+    <div class="star">⭐</div>
+    <h3>4.8/5 Rating</h3>
+    <p>Trusted by thousands of users worldwide</p>
+    <a href="/services" style="text-decoration: none;color:white;">Explore Services</a>
+  </div>
+</section>
+
+
+
+
+<!-- contact us section -->
+ <div class="center-wrapper">
+  <div class="card-slider-wrapper">
+      <div class="card-slider" id="cardSlider">
+
+        <!-- Contact Us Section -->
+        <div class="card-slide contact-section">
+          <h1  data-aos="zoom-in" data-aos-delay="100">Contact Us</h1>
+          <p class="sub-text"   data-aos="zoom-in" data-aos-delay="200">We'd love to hear from you. Whether you have a question, feedback, or a service inquiry — feel free to get in touch with us.</p>
+          <div class="contact-wrapper">
+            <form class="contact-form">
+              <label for="contactName">Name</label>
+              <input type="text" id="contactName" name="name" placeholder="Your full name" required  data-aos="zoom-in" data-aos-delay="300">
+
+              <label for="contactEmail">Email</label>
+              <input type="email" id="contactEmail" name="email" placeholder="Your email address" required  data-aos="zoom-in" data-aos-delay="400">
+
+              <label for="contactMessage">Message</label>
+              <textarea id="contactMessage" name="message" rows="5" placeholder="Your message..."  required data-aos="zoom-in" data-aos-delay="500"></textarea>
+
+              <button type="submit" class="btn-blue" data-aos="zoom-in" data-aos-delay="500">Send Message</button>
+            </form>
+
+          <div class="contact-info-wrapper">
+    <div class="contact-info"  data-aos="zoom-in" data-aos-delay="500">
+      <h2>Reach Us</h2>
+      <p><strong>Email:</strong> support@Queueleap.com</p>
+      <p><strong>Phone:</strong> +91 98765 43210</p>
+      <p><strong>Address:</strong> 2nd Floor 24towers, Hitech City, Hyderabad</p>
+      <p>Mon to Sat, 9:00 AM – 6:00 PM IST.</p>
+    </div>
+  </div>
+
+          </div>
+          <div class="toggle-link"  data-aos="zoom-in" data-aos-delay="400">
+ <p>Want to leave feedback?
+  <a href="#" onclick="navigateToSection('feedback'); return false;">Click here</a>
+</p>
+          </div>
+        </div>
+
+      <!-- Feedback Section -->
+  <div class="card-slide">
+    <div class="feedback-container">
+      <div class="feedback-content">
+        <h1>We’d love your feedback</h1>
+        <p class="sub-text">Help us improve QueueSys by telling us what worked and what didn’t.</p>
+        
+
+
+
+        <form class="feedback-form" action="/feedback" method="POST">
+                    <!-- Make reCAPTCHA token visible for debugging -->
+            <label for="recaptchaToken">reCAPTCHA Token:</label>
+            <input
+              type="text"
+              name="recaptchaToken"
+              id="recaptchaToken"
+              placeholder="reCAPTCHA will be filled automatically"
+              readonly
+              style="width: 100%; margin: 10px 0; background-color: #f0f0f0; color: #555;"
+            />
+
+
+
+         <input type="hidden" name="role" value="<%= typeof role !== 'undefined' ? role : 'guest' %>" />
+
+          <label for="fbName">Name</label>
+          <input type="text" name="name" id="fbName" required />
+
+          <label for="fbEmail">Email</label>
+          <input type="email" name="email" id="fbEmail" value="<%= typeof email !== 'undefined' ? email : '' %>" required />
+
+          <label>Rate your experience</label>
+          <div class="rating">
+            <input type="radio" id="star5" name="rating" value="5" required /><label for="star5">★</label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4">★</label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3">★</label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2">★</label>
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1">★</label>
+          </div>
+
+          <button type="submit" class="btn-blue">Submit Feedback</button>
+        </form>
+
+        <div class="toggle-link"  style="display: flex;align-items:center; justify-content:center">
+          <p>Need to contact us?
+            <a href="#" onclick="navigateToSection('contact'); return false;">Click here</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Right semicircle background with text -->
+      <div class="feedback-side-info">
+        <div class="feedback-circle-text">
+          <h2>Your Voice Matters</h2>
+          <p>We truly value your opinion and use your feedback to improve QueueSys every day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Footer Start -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      
+      <!-- About / Tagline -->
+      <div class="footer-section about"  data-aos="fade-down" data-aos-delay="100">
+        <h2>QueueLeap</h2>
+        <p>Your trusted solution for seamless queue management and customer service efficiency.</p>
+      </div>
+      
+      <!-- Quick Links -->
+      <div class="footer-section links" data-aos="fade-down" data-aos-delay="200">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/faq">FAQ</a></li>
+        </ul>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="footer-section contact" data-aos="fade-down" data-aos-delay="300">
+        <h3>Contact Us</h3>
+        <p><strong>Email:</strong> support@queueleap.com</p>
+        <p><strong>Phone:</strong> +91 7013688536</p>
+        <p><strong>Address:</strong> Hitech city, 24 Towers, Hyderabad Telanaga , 500074</p>
+      </div>
+      
+
+
+      <!-- Social Media -->
+      <div class="footer-section social" data-aos="fade-down" data-aos-delay="400">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 QueueSys. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+  
+
+
+
+
+
+
+
+<script src="./javascripts/main.js"></script>
+
+
+<!-- AOS Animation JS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,  // how long animation lasts
+    once: true,     // only once per scroll
+    offset: 100     // how early to trigger
+  });
+</script>
+
+
+
+ <script>
+    function toggleMore(button) {
+      const moreText = button.previousElementSibling.querySelector('.more-text');
+      if (moreText.style.display === 'inline') {
+        moreText.style.display = 'none';
+        button.textContent = 'Read More';
+      } else {
+        moreText.style.display = 'inline';
+        button.textContent = 'Read Less';
+      }
+    }
+  </script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", async function () {
+    const adminLink = document.getElementById("adminLink");
+
+    try {
+      const res = await fetch("/api/check-admin-session"); // backend API to check login status
+      const data = await res.json();
+
+      adminLink.href = data.loggedIn ? "/admin-dashboard" : "/login";
+    } catch (err) {
+      adminLink.href = "/login";
+    }
+  });
+</script>
+
+<script>
+  document.getElementById("hamburger").addEventListener("click", () => {
+    document.getElementById("navbarLinks").classList.toggle("active");
+  });
+</script>
+
+
+
+<!-- Google reCAPTCHA v3 (replace with your actual site key) -->
+<script src="https://www.google.com/recaptcha/api.js?render=<%= siteKey %>"></script>
+
+<script>
+  // Slider navigation between Contact and Feedback sections
+  function slideTo(section) {
+    const slider = document.getElementById("cardSlider");
+    if (!slider) return;
+
+    slider.style.transform = section === 'contact' ? 'translateX(0%)' : 'translateX(-50%)';
+    history.pushState(null, "", `/${section}`);
+  }
+
+  // Feedback form submission with reCAPTCHA
+  document.addEventListener("DOMContentLoaded", function () {
+    const feedbackForm = document.querySelector('.feedback-form');
+
+    if (feedbackForm) {
+      feedbackForm.addEventListener('submit', function (e) {
+        e.preventDefault(); // stop default form submit
+
+        grecaptcha.ready(function () {
+          grecaptcha.execute('<%= siteKey %>', { action: 'submit_feedback' }).then(function (token) {
+            const tokenInput = document.getElementById('recaptchaToken');
+            if (tokenInput) {
+              tokenInput.value = token;
+              feedbackForm.submit(); // submit form after token is set
+            }
+          });
+        });
+      });
+    }
+
+    // Handle slider state on page load
+    const slider = document.getElementById("cardSlider");
+    const path = window.location.pathname;
+
+    if (slider) {
+      if (path === "/feedback") {
+        slider.style.transform = 'translateX(-50%)';
+      } else if (path === "/contact") {
+        slider.style.transform = 'translateX(0%)';
+      }
+    }
+  });
+
+  // Update slider on back/forward browser navigation
+  window.addEventListener("popstate", () => {
+    const slider = document.getElementById("cardSlider");
+    const path = window.location.pathname;
+
+    if (slider) {
+      if (path === "/feedback") {
+        slider.style.transform = 'translateX(-50%)';
+      } else {
+        slider.style.transform = 'translateX(0%)';
+      }
+    }
+  });
+</script>
+
+<script>
+
+
+  function scrollToContact() {
+  navigateToSection('contact');
+
+  const wrapper = document.querySelector('.center-wrapper');
+  if (wrapper) {
+    const offset = 80; // adjust based on your navbar height
+    const top = wrapper.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
+  function navigateToSection(section) {
+    const slider = document.getElementById("cardSlider");
+    if (section === 'feedback') {
+      slider.style.transform = 'translateX(-50%)';
+      history.pushState(null, "", "/feedback");
+    } else {
+      slider.style.transform = 'translateX(0%)';
+      history.pushState(null, "", "/contact");
+    }
+  }
+
+  // Handle URL-based slider transform on load
+  document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.getElementById("cardSlider");
+    const path = window.location.pathname;
+
+    if (path === "/feedback") {
+      slider.style.transform = 'translateX(-50%)';
+    } else if (path === "/contact") {
+      slider.style.transform = 'translateX(0%)';
+    }
+
+  });
+
+  // Support browser navigation buttons
+  window.addEventListener("popstate", () => {
+    const slider = document.getElementById("cardSlider");
+    const path = window.location.pathname;
+
+    if (path === "/feedback") {
+      slider.style.transform = 'translateX(-50%)';
+    } else {
+      slider.style.transform = 'translateX(0%)';
+    }
+  });
+</script>
+
+<%- include("partials/_toast") %>
+
+</body>
+</html>
+
+
+
+

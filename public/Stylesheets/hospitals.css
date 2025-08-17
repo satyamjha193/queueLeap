@@ -1,0 +1,891 @@
+/* === Base Reset === */
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+/* === Layout: Stats Cards === */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h2 {
+  font-size: 1.8rem;
+  margin-top: 0.5rem;
+}
+
+/* === Search Bar === */
+.search-bar {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* === Hospital List Grid === */
+.hospital_container {
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.centeralised-cards {
+  display: flex;
+  justify-content: flex-start; /* <-- Align items to the left */
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+.hospital-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 24px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* .hospital-card {
+  background-color: #b50e0e;
+  width: calc(33% - 24px);
+  border-radius: 16px;
+  display: block;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+} */
+
+
+
+
+.hospital-card {
+  background-color: #b50e0e;
+  width: calc(50% - 12px); /* 2 cards in row with 24px gap */
+  border-radius: 16px;
+  display: block;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+/* Mobile (1 per row) */
+@media (max-width: 900px) {
+  .hospital-card {
+    width: 100%;
+  }
+}
+
+
+.hospital-card:hover {
+  transform: translateY(-5px);
+}
+
+.hospital-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+/* === Hospital Info Section === */
+.hospital-info {
+  padding: 20px;
+  position: relative;
+}
+
+.hospital-info h3 {
+  margin-bottom: 6px;
+  font-size: 1.2rem;
+}
+
+.hospital-info p {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* === Queue Info === */
+.queue-info {
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+
+
+/* === Waiting Progress Bar === */
+.wait-bar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 5px;
+  margin-top: 8px;
+  overflow: hidden;
+  /* border: 1px solid black; */
+}
+ .fill {
+  height: 100%;
+  background: linear-gradient(to right, #4ade80, #22c55e);
+  width: 0;
+  transition: width 0.5s ease;
+  border-radius: 5px;
+  transition: width 0.5s ease, background 0.5s ease;
+
+}
+
+.fill-0 { width: 0%; }
+.fill-10 { width: 10%; }
+.fill-20 { width: 20%; }
+/* ... */
+.fill-100 { width: 100%; }
+
+/* === Buttons === */
+.btn {
+  display: inline-block;
+  margin-top: 12px;
+  background-color: #111827;
+  color: white;
+  padding: 10px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #374151;
+}
+
+/* === Responsive Cards === */
+@media (max-width: 1111px) and (min-width: 769px) {
+  /* .hospital-card {
+    width: 42%;
+    margin: 1rem;
+  } */
+}
+
+@media (max-width: 768px) {
+  /* .hospital-card {
+    width: 90%;
+    margin: 1rem auto;
+  } */
+
+  .centeralised-cards{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+}
+
+/* === Header Banner === */
+header {
+  background: linear-gradient(135deg, #d1fae5, #111827);
+  color: white;
+  padding: 3rem 1rem;
+  text-align: center;
+  /* margin: 1rem; */
+}
+
+.badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+header h1 span {
+  color: #ffea8b;
+}
+
+header p {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* === Search Wrapper === */
+.search-wrapper-container {
+  margin: 2rem auto 0;
+  max-width: 600px;
+  padding: 0 1rem;
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background-color: rgb(255, 255, 255);
+  padding: 7px ;
+  border-radius: 10px;
+}
+
+.search-wrapper input {
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  width: 300px;
+  font-size: 1rem;
+  outline: none;
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-wrapper button {
+  background-color: #e87d24;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 1rem;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* === Top Section Layout (Button + Stats) === */
+.top-section {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 2rem 1rem;
+}
+
+/* === Shared Card Styling (Stats + Button Container) === */
+.card {
+  background-color: rgb(255, 255, 255);
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  width: 250px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* === Button Card Specific === */
+.find-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* Remove extra padding */
+}
+
+/* === Button Styling (Reused from your earlier CSS) === */
+.near-you-btn {
+  background: linear-gradient(135deg, #e87d24, #ff994f);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.near-you-btn i {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.near-you-btn:hover {
+  background: linear-gradient(135deg, #d96c1f, #ff7c1a);
+  transform: translateY(-2px);
+}
+
+/* === Stats Card Typography === */
+.card h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+.card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+
+
+@media(max-width: 500px){
+   .top-section {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  header{
+    margin: 0;
+  }
+ 
+  .card {
+    width: 90%;
+    padding: 5px 10px;
+  }
+
+  .near-you-btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.2rem;
+  }
+}
+
+/* === Footer === */
+.footer-banner {
+  background: linear-gradient(135deg, #78a68e, #355293);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 4rem;
+}
+
+.wave-top svg {
+  display: block;
+  width: 100%;
+  height: 120px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.footer-content {
+  position: relative;
+  padding-top: 140px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.footer-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.footer-content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.footer-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.footer-buttons button {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .footer-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .footer-content p {
+    font-size: 1rem;
+  }
+
+  .footer-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+/* color changing on queue size incresase */
+.queue-info {
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.queue-info.light {
+  background-color: #d1fae5; /* soft green */
+  color: #065f46;
+}
+
+.queue-info.moderate {
+  background-color: #fef9c3; /* soft yellow */
+  color: #92400e;
+}
+
+.queue-info.busy {
+  background-color: #fee2e2; /* soft red */
+  color: #991b1b;
+}
+
+
+
+
+
+
+
+
+
+/* find clinics near u */
+.hospital-card {
+  background: #fff;
+  padding: 1rem;
+  margin: 1rem auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  max-width: 600px;
+  transition: transform 0.2s ease;
+}
+.hospital-card:hover {
+  transform: translateY(-3px);
+}
+.hospital-card h3 {
+  margin-bottom: 0.4rem;
+}
+.map-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #2563eb;
+  text-decoration: underline;
+}
+/* No results when seaerched for near by 5kms */
+.no-results-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  width: 100%;
+  text-align: center;
+}
+
+.no-results-message {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+  max-width: 500px;
+  width: 90%;
+}
+
+.main-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #e53935;
+  margin-bottom: 8px;
+}
+
+.sub-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+
+
+@media(max-width : 768px){
+  .hospital-card{
+    margin: 1% auto;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============shop open close===================================== */
+/* ======= Shop Status Badge ======= */
+.shop-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.shop-status.open {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.shop-status.closed {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* shop open close badge animation */
+.status-indicator {
+  font-size: 0.6rem;
+  margin-right: 6px;
+}
+
+/* Green blinking circle for open */
+.shop-status.open .status-indicator {
+  color: green;
+  animation: blink 1s infinite;
+}
+
+/* Red static circle for closed */
+.shop-status.closed .status-indicator {
+  color: red;
+}
+
+/* Blinking animation */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #how-it-works {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    /* background-color: #ffffff; */
+    padding: 3rem 2rem;
+    border-radius: 1.5rem;
+    max-width: 1300px;
+    margin: 0 auto 3rem auto;
+    /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05); */
+  }
+
+  #how-it-works h2 {
+    font-size: 2rem;
+    font-weight: 100;
+    margin-bottom: 2rem;
+    color: #02180c;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .step-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .step-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .step-icon {
+    font-size: 1.6rem;
+    color: #78a68e;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .step-content h3 {
+    margin: 0 0 0.4rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .step-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 600px) {
+    #how-it-works {
+      padding: 2rem 1rem;
+    }
+    #how-it-works h2 {
+      font-size: 1.6rem;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+/* how it works section below the header part */
+
+
+
+.ql-section {
+      padding: 3rem 1rem;
+      text-align: center;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .ql-section-title {
+      font-size: 2rem;
+      color: #78a68e;
+      margin-bottom: 1rem;
+    }
+
+    .ql-section-subtitle {
+      max-width: 720px;
+      margin: 0 auto;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .ql-card-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      .ql-card-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (min-width: 640px) and (max-width: 1023px) {
+      .ql-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 639px) {
+      .ql-card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ql-feature-card {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      text-align: left;
+      min-height: 190px;
+    }
+
+    .ql-feature-card:hover {
+      box-shadow: 0 6px 18px  #dee8e3;
+    }
+
+    .ql-icon-box {
+      background-color: #78a68e;
+      color: white;
+      padding: 8px;
+      border-radius: 50%;
+      font-size: 1rem;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+
+    .ql-feature-card h3 {
+      font-size: 0.95rem;
+      margin: 0.2rem 0;
+      color: #1a1a1a;
+      transition: color 0.3s ease;
+    }
+
+    .ql-feature-card:hover h3 {
+      color: #78a68e;
+    }
+
+    .ql-feature-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.3rem 0 0;
+    }
+
+    .ql-feature-card ul li {
+      font-size: 0.82rem;
+      color: #444;
+      margin: 2px 0;
+    }
+
+    /* How It Works Section */
+    .ql-how-it-works {
+      background: #f7fdf7;
+      padding: 3rem 1rem;
+      border-radius: 20px;
+      margin: 3rem auto;
+      max-width: 1300px;
+     
+    }
+
+
+    .ql-how-title {
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      color: #78a68e;
+    }
+
+    .ql-steps-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .ql-steps-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    .ql-step-box {
+      flex: 1;
+    }
+
+    .ql-step-number {
+      background: #78a68e;
+      color: white;
+      width: 48px;
+      height: 48px;
+      line-height: 48px;
+      border-radius: 50%;
+      margin: 0 auto 0.8rem;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .ql-step-box h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+      color: #111;
+    }
+
+    .ql-step-box p {
+      font-size: 0.85rem;
+      color: #555;
+      margin: 0;
+    }
+
+
+
+
+.nearby-shops-section {
+  background-color: #fff;
+  padding: 4rem 1rem 2rem;
+  text-align: center;
+}
+
+.nearby-shops-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.nearby-title {
+  font-size: 2rem;
+   color: #78a68e;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.nearby-subtitle {
+  font-size: 1rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}

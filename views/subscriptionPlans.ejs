@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/Stylesheets/subscriptionPlans.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- AOS Animation CSS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+
+  <title>Queue System Pricing</title>
+
+</head>
+<body>
+<!-- Flat Card with Curved Bottom (No border radius on SVG container) -->
+ <div class="plans-section"  style="transition: none;" >
+<section style="
+  width: 100%;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #1c4a94, #4b7bb5);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+  border:none;
+">
+  <!-- 📄 Content Area -->
+  <div style="padding: 40px 30px; text-align: center;">
+    <h1 class="reveal-text" id="heading-text"  style="font-size: 2rem; margin-bottom: 12px; color: #ffffff;">Queuesys Plans & Pricing</h1>
+    <p class="reveal-text" id="para-text" class="text-reveal para-reveal" id="para-text" style="font-size: 1rem; color: #f1f1f4; margin-bottom: 30px;">
+      Choose a plan that fits your service size and customer flow. Enable real-time token bookings, admin control, and location management.
+    </p>
+
+    <!-- 🔁 Toggle Billing Mode -->
+    <div  class="toggle-bar" style="display: flex; justify-content: center; align-items: center; gap: 12px;">
+      <label  for="billingToggle" style="font-size: 0.95rem; color: #e4e6eb;">
+        Pay annually, <span style="text-decoration: underline;">save up to 17%</span>
+      </label>
+      <input type="checkbox" id="billingToggle" style="display: none;" />
+      <label for="billingToggle" class="toggle-switch" style="
+        width: 44px;
+        height: 24px;
+        background: #d1d5db;
+        border-radius: 9999px;
+        position: relative;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      "></label>
+    </div>
+  </div>
+
+  <!-- 🔄 Curved Bottom SVG (Flat container, no border radius) -->
+  <svg viewBox="0 0 500 80" preserveAspectRatio="none" style="display: block; width: 100%; height: 80px; transform: rotate(180deg); border:none;">
+    <path d="M0,40 C150,80 350,0 500,40 L500,0 L0,0 Z" fill="#ffffff"></path>
+  </svg>
+</section>
+</div>
+
+
+
+ <div class="container">
+    <!-- Toggle -->
+    <div class="toggle">
+      <button data-aos="fade-right" data-aos-delay="100" class="active" data-mode="monthly">Monthly</button>
+      <button data-aos="fade-right" data-aos-delay="200" data-mode="quarterly">Quarterly</button>
+      <button data-aos="fade-right" data-aos-delay="300" data-mode="yearly">Yearly</button>
+    </div>
+
+    <!-- Plans -->
+    <section class="plans-container">
+
+      <!-- Free Trial -->
+      <div  data-aos="fade-right" data-aos-delay="100" class="plan-card" data-monthly="0" data-quarterly="0" data-yearly="0">
+        <h3>Free Trial</h3>
+        <p>Try our system free for 30 days. Limited features, no commitment.</p>
+        <div class="plan-price">₹0 <span>/30 days</span></div>
+        <button>Start Free</button>
+        <ul class="features">
+          <li>1 service location</li>
+          <li>Live token preview only</li>
+          <li>No admin analytics</li>
+          <li>Email notification only</li>
+        </ul>
+      </div>
+
+      <!-- Lite -->
+      <div data-aos="fade-right" data-aos-delay="200" class="plan-card" data-monthly="129" data-quarterly="327" data-yearly="107">
+        <h3>Lite</h3>
+        <p>Best for small clinics or new service points just getting started.</p>
+        <div class="plan-price">₹129 <span>/mo</span></div>
+        <button>Get Started</button>
+        <ul class="features">
+          <li>Manage up to 2 locations</li>
+          <li>Live token dashboard</li>
+          <li>Email/SMS notifications</li>
+          <li>Basic analytics report</li>
+        </ul>
+      </div>
+
+      <!-- Standard -->
+      <div data-aos="fade-right" data-aos-delay="300" class="plan-card" data-monthly="249" data-quarterly="627" data-yearly="207">
+        <h3>Standard</h3>
+        <p>Ideal for hospitals, salons, or banks needing admin roles & insights.</p>
+        <div class="plan-price">₹249 <span>/mo</span></div>
+        <button>Get Started</button>
+        <ul class="features">
+          <li>10 service locations</li>
+          <li>Real-time WebSocket updates</li>
+          <li>Multiple admin support</li>
+          <li>Estimated wait time tracking</li>
+        </ul>
+      </div>
+
+      <!-- Advanced -->
+      <div data-aos="fade-right" data-aos-delay="400" class="plan-card" data-monthly="449" data-quarterly="1127" data-yearly="373">
+        <h3>Advanced</h3>
+        <p>Perfect for enterprise-level healthcare or multi-branch operations.</p>
+        <div class="plan-price">₹449 <span>/mo</span></div>
+        <button>Get Started</button>
+        <ul class="features">
+          <li>Unlimited locations</li>
+          <li>Custom token rules & time slots</li>
+          <li>Auto-cleanup & analytics</li>
+          <li>QR-based customer tracking</li>
+        </ul>
+      </div>
+
+    </section>
+  </div>
+
+
+   
+
+
+ 
+
+<script src="/javascripts/subscriptionPlans.js"></script>
+<script>
+    const toggleBtns = document.querySelectorAll('.toggle button');
+    const planCards = document.querySelectorAll('.plan-card');
+
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const mode = btn.getAttribute('data-mode');
+
+        planCards.forEach(card => {
+          const price = card.getAttribute(`data-${mode}`);
+          const priceLabel = card.querySelector('.plan-price');
+
+          if (price === "0") {
+            priceLabel.innerHTML = `₹0 <span>/30 days</span>`;
+          } else {
+            const suffix = mode === "monthly" ? "/mo" : mode === "quarterly" ? "/qtr" : "/yr";
+            priceLabel.innerHTML = `₹${price} <span>${suffix}</span>`;
+          }
+        });
+      });
+    });
+  </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+  function splitTextByLetter(elementId) {
+    const el = document.getElementById(elementId);
+    const text = el.textContent;
+    el.textContent = ''; // clear existing
+
+    for (let char of text) {
+      const span = document.createElement('span');
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      el.appendChild(span);
+    }
+  }
+
+  window.addEventListener('load', () => {
+
+      gsap.from(".plans-section", {
+      opacity: 0,
+      y: 50,
+      duration: 1.2,
+      ease: "power3.out"
+    });
+
+
+    // Split text into spans
+    splitTextByLetter('heading-text');
+    splitTextByLetter('para-text');
+
+    // Animate heading
+    gsap.to('#heading-text span', {
+      opacity: 1,
+      x: 0,
+      duration: 0.4,
+      ease: 'power2.out',
+      stagger: 0.025,
+    });
+
+    // Animate paragraph
+    gsap.to('#para-text span', {
+      opacity: 1,
+      x: 0,
+      duration: 0.3,
+      ease: 'power1.out',
+      stagger: 0.008,
+      delay: 0.7,
+    });
+  });
+
+
+  
+</script>
+
+
+
+<!-- AOS Animation JS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,  // how long animation lasts
+    once: true,     // only once per scroll
+    offset: 100     // how early to trigger
+  });
+</script>
+
+
+</body>
+</html>

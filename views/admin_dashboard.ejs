@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <link rel="stylesheet" href="/Stylesheets/admin_dashboard.css">
+   <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+
+  <meta name="admin-id" content="<%= admin._id %>">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+</head>
+<body data-admin-id="<%= admin._id %>">
+
+
+
+
+
+
+
+
+<!-- Confirm Modal -->
+<div id="confirmModal" class="modal-backdrop" style="display: none;">
+  <div class="modal-box">
+    <p id="modalMessage">Are you sure you want to change the shop status?</p>
+    <div class="modal-actions">
+      <button id="confirmBtn" class="btn confirm">Yes</button>
+      <button id="cancelBtn" class="btn cancel">No</button>
+    </div>
+  </div>
+</div>
+
+
+
+ <div class="container">
+    <header class="dashboard-header animate-up"  data-aos="zoom-in" data-aos-delay="100">
+      <div class="left">
+        <i class="<%= getSectorIcon(admin.sectorname) %>"></i>
+
+        <div>
+          <h1>Admin Dashboard</h1>
+          <span> <%= admin.shopname %></span>
+        </div>
+      </div>
+      <div class="right">
+        <div class="profile">
+          <i class="fas fa-user-tie"></i>
+          <p><strong><%= admin.name %></strong><br><span><%= admin.email %></span></p>
+        </div>
+        <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+
+    </header>
+
+
+
+
+
+
+
+
+    
+
+    <nav class="top-nav animate-up">
+  <!-- Toggle Button (Visible on small screens) -->
+  <button class="menu-toggle" onclick="toggleDropdownMenu()">
+    <i class="fas fa-bars"></i> Menu
+  </button>
+
+  <!-- Original Buttons (Wrapped for toggle effect) -->
+  <div class="menu-buttons">
+
+ 
+
+
+<div id="toggleShopBtn"
+  class="toggle-status-btn <%= shop && shop.isOpen ? 'open' : 'closed' %>"
+  data-isopen="<%= shop?.isOpen || false %>"
+  data-shopid="<%= shop?._id || '' %>"
+  data-sectorname="<%= admin?.sectorname.toLowerCase().includes('salon') ? 'salon' : 'hospital' %>"
+  style="margin: 10px; background-color: #2450a2; color: white; padding: 6px; width: 7rem; position: relative;">
+  
+  <i class="fas fa-store"></i>
+  <span id="shopStatusText">
+    <%= shop?.isOpen ? 'Open' : 'Closed' %>
+  </span>
+
+  <!-- 🔄 Spinner -->
+  <div id="toggleSpinner"
+    style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); display: none;">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div>
+</div>
+
+
+
+
+
+
+
+    <button class="active" data-aos="zoom-in" data-aos-delay="0"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+    <button id="profile_setting_page" data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-user-cog"></i> Profile & Settings</button>
+    <button data-aos="zoom-in" data-aos-delay="200"><i class="fas fa-users-cog"></i> Manage Users</button>
+    <button data-aos="zoom-in" data-aos-delay="300"><i class="fas fa-users"></i> Manage Staff</button>
+    <button data-aos="zoom-in" data-aos-delay="400"><i class="fas fa-coffee"></i> Break Time</button>
+    <button data-aos="zoom-in" data-aos-delay="500"><i class="fas fa-file-alt"></i> View Reports</button>
+    <button data-aos="zoom-in" data-aos-delay="600"><a href="/admin/expired-tokens" class="btn btn-secondary" style="text-decoration:none">📋 View Expired Tokens</a></button>
+  </div>
+</nav>
+
+
+    <main class="dashboard">
+ 
+
+      <section class="summary-cards animate-up">
+       <div class="card blue" data-aos="zoom-in" data-aos-delay="100">
+  <i class="fas fa-ticket-alt icon"></i>
+  <p>Current Token</p>
+  <% if (stats?.usersInQueue > 0 && stats?.currentToken) { %>
+    <h2 id="currentToken">#<%= stats.currentToken %></h2>
+  <% } else { %>
+    <h2 id="currentToken" style="opacity: 0.6;">None</h2>
+  <% } %>
+</div>
+
+
+<div class="card green" data-aos="zoom-in" data-aos-delay="100">
+  <i class="fas fa-check-circle icon"></i>
+  <p>Tokens Served</p>
+  <h2 id="tokensServed"><%= stats?.tokensServed || 0 %></h2> <!-- ✅ Server-side injected -->
+</div>
+
+  <div class="card orange">
+  <i class="fas fa-user-clock icon"></i>
+  <p>Users in Queue</p>
+  <h2 id="usersInQueue"><%= stats?.usersInQueue || 0 %></h2> <!-- ✅ Make sure this line exists -->
+</div>
+
+      </section>
+
+
+
+
+<div class="flex-grid">
+  <!-- Chart Box -->
+  <div class="chart-box animate-up">
+    <h3><i class="fas fa-chart-bar"></i> Daily Queue Statistics</h3>
+    <canvas id="queueChart"></canvas>
+  </div>
+
+  <!-- Controls Box -->
+  <div class="controls-box animate-up">
+    <h3><i class="fas fa-sliders-h"></i> Queue Controls</h3>
+
+    <!-- Serve Token Form -->
+<div id="nextTokenContainer">
+  <% if (currentWaitingTokenId) { %>
+    <form id="nextTokenForm" action="/admin/serve/<%= currentWaitingTokenId %>" method="POST">
+      <button type="submit" class="next-btn" data-aos="zoom-in" data-aos-delay="100">
+        <i class="fas fa-forward"></i> Next Token
+      </button>
+    </form>
+  <% } else { %>
+    <button class="next-btn disabled" disabled style="background: #ccc; cursor: not-allowed;" data-aos="zoom-in" data-aos-delay="100">
+      <i class="fas fa-ban"></i> No Token to Serve
+    </button>
+  <% } %>
+</div>
+
+
+
+
+    <button data-aos="zoom-in" data-aos-delay="200" class="resume-btn">
+      <i class="fas fa-play"></i> Resume Queue
+    </button>
+
+    <div class="jump-controls">
+      <input data-aos="zoom-in" data-aos-delay="300" type="number" placeholder="Token No." />
+      <button data-aos="zoom-in" data-aos-delay="400" class="jump-btn">
+        <i class="fas fa-arrow-right"></i> Jump To Token Number
+      </button>
+    </div>
+  </div>
+</div>
+
+    </main>
+  </div>
+
+
+
+ 
+
+
+
+
+  <!-- Logout Button -->
+<!-- Confirmation Popup -->
+<div id="logoutPopup" class="popup-overlay" style="display: none;"  data-aos="fade-right" data-aos-delay="100">
+  <div class="popup-box">
+    <p data-aos="fade-right" data-aos-delay="200"> Are you sure you want to logout?</p>
+    <div class="popup-actions">
+      <button data-aos="fade-right" data-aos-delay="300" id="confirmLogout" class="confirm-btn">Yes</button>
+      <button data-aos="fade-right" data-aos-delay="300" id="cancelLogout" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- LiveQueue.ejs -->
+ 
+<div class="queue-box">
+  <div class="queue-header">
+    <span><%= tokens.length %> Users in Queue</span>
+  </div>
+
+  <div class="queue-scroll">
+    <% tokens.forEach((token, idx) => { %>
+      <div class="queue-card <%= idx === 0 ? 'active-card' : '' %>" data-id="<%= token._id %>">
+        <div class="queue-left">
+          <div class="queue-circle">#<%= token.serialNumber %></div>
+          <div class="queue-info">
+            <div class="queue-name">
+              <%= token.fullName %>
+              <% if (token.status === 'completed' || token.status === 'served') { %>
+                <span class="status served">Served</span>
+              <% } else if (idx === 0) { %>
+                <span class="status now">Now Serving</span>
+              <% } else { %>
+                <span class="status waiting">Waiting</span>
+              <% } %>
+            </div>
+            <div class="queue-detail">
+              <i class="fas fa-phone-alt"></i> <%= token.phoneNumber %>
+            </div>
+            <div class="queue-detail">
+              <i class="far fa-clock"></i>
+              <%= new Date(token.createdAt).toLocaleTimeString("en-IN", {
+                hour: '2-digit', minute: '2-digit'
+              }) %>
+            </div>
+          </div>
+        </div>
+
+        <% if (token.status !== 'served' && token.status !== 'completed') { %>
+          <div class="queue-trash" onclick="confirmDelete('<%= token._id %>')">
+            <i class="fas fa-trash-alt"></i>
+          </div>
+        <% } %>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<!-- Dropdown Toggle for Served Tokens -->
+
+
+<div style="margin: 20px auto; max-width: 900px; text-align: center;">
+  <button onclick="toggleServedTokens()" style="padding: 10px 20px; background-color: #1e40af; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+    Show Served Tokens ▼
+  </button>
+</div>
+
+<!-- Served Tokens Table -->
+<div id="servedTokensContainer" style="margin: 20px auto; max-width: 900px; display: none;">
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background-color: #f3f4f6;">
+        <th style="padding: 10px; border: 1px solid #ccc;">#</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Name</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Phone</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Status</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% servedTokens.forEach(token => { %>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ccc; font-weight: bold;">#<%= token.serialNumber %></td>
+          <td style="padding: 10px; border: 1px solid #ccc;"><%= token.fullName %></td>
+          <td style="padding: 10px; border: 1px solid #ccc;"><%= token.phoneNumber %></td>
+          <td style="padding: 10px; border: 1px solid #ccc;">
+            <span style="color: green; font-weight: bold;">Served</span>
+          </td>
+          <td style="padding: 10px; border: 1px solid #ccc;">
+            <%= new Date(token.createdAt).toLocaleTimeString("en-IN", { hour: '2-digit', minute: '2-digit' }) %>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+<!-- ✅ Delete Confirmation Modal -->
+<div id="deleteConfirmModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.4); z-index:9999;">
+  <div style="background:white; padding:1rem; border-radius:10px; max-width:400px; margin:10% auto; text-align:center; height:15%">
+    <p>Are you sure you want to delete this token?</p>
+    <button id="confirmDeleteBtn" style="margin: 10px; padding: 6px 14px; background-color: #dc2626; color: white; border: none; border-radius: 6px;">Yes, Delete</button>
+    <button onclick="closeDeleteModal()" style="padding: 6px 14px; background-color: #9ca3af; color: white; border: none; border-radius: 6px;">Cancel</button>
+  </div>
+</div>
+
+
+
+<script>
+
+
+
+
+
+
+
+
+
+  
+  function toggleServedTokens() {
+    const container = document.getElementById("servedTokensContainer");
+    const btn = document.querySelector("button[onclick='toggleServedTokens()']");
+    const isHidden = container.style.display === 'none';
+
+    container.style.display = isHidden ? 'block' : 'none';
+    btn.innerText = isHidden ? 'Hide Served Tokens ▲' : 'Show Served Tokens ▼';
+  }
+</script>
+
+
+
+<script>
+  let tokenToDeleteId = null;
+
+  function confirmDelete(tokenId) {
+    tokenToDeleteId = tokenId;
+    const modal = document.getElementById('deleteConfirmModal');
+    if (modal) {
+      modal.style.display = 'block';
+    } else {
+      console.error('❌ Delete modal not found in DOM.');
+    }
+  }
+
+  function closeDeleteModal() {
+    document.getElementById('deleteConfirmModal').style.display = 'none';
+    tokenToDeleteId = null;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', () => {
+        if (tokenToDeleteId) {
+          // 🔴 Replace this with your real delete API call:
+          fetch(`/delete-token/${tokenToDeleteId}`, {
+            method: 'DELETE'
+          })
+          .then(res => {
+            if (res.ok) {
+              location.reload(); // or remove card dynamically
+            } else {
+              alert("⚠️ Failed to delete token.");
+            }
+          })
+          .catch(err => {
+            console.error("❌ Error deleting token:", err);
+          });
+        }
+        closeDeleteModal();
+      });
+    }
+  });
+</script>
+
+
+
+<script>
+  let tokenToDelete = null;
+
+  function confirmDelete(tokenId) {
+    tokenToDelete = tokenId;
+    document.getElementById("deleteConfirmModal").style.display = "flex";
+  }
+
+  function closeModal() {
+    tokenToDelete = null;
+    document.getElementById("deleteConfirmModal").style.display = "none";
+  }
+
+  document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
+    if (!tokenToDelete) return;
+
+    try {
+      const res = await fetch(`/admin/delete-token/${tokenToDelete}`, { method: "DELETE" });
+      if (res.ok) {
+        window.location.reload(); // Or socket emit if you're using real-time updates
+      } else {
+        alert("Failed to delete user.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while deleting.");
+    } finally {
+      closeModal();
+    }
+  });
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const noTokenBtn = document.getElementById("nextTokenBtn");
+    if (noTokenBtn) {
+      noTokenBtn.addEventListener("click", () => {
+        Swal.fire({
+          icon: 'info',
+          title: 'No Tokens Left',
+          text: 'There are no more tokens in the queue to serve.',
+          confirmButtonText: 'OK'
+        });
+
+      });
+    }
+  });
+</script>
+
+  
+<!-- Include Socket.IO client FIRST -->
+<script src="/socket.io/socket.io.js"></script>
+
+ <!-- frontend websockets scripts To get data of current users in queue through database -->
+<script src="/javascripts/admin-dashboard.js"></script> <!---  this also have the frontend admindashboard.js access-->
+
+
+<!-- Embed raw JSON safely without escaping -->
+<script type="application/json" id="chart-labels"><%- JSON.stringify(labels || []) %></script>
+<script type="application/json" id="chart-booked"><%- JSON.stringify(chartBookedData || []) %></script>
+<script type="application/json" id="chart-served"><%- JSON.stringify(chartServedData || []) %></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById('queueChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+
+    // ✅ Parse raw JSON safely
+    const chartLabels = JSON.parse(document.getElementById('chart-labels').textContent);
+    const chartData = JSON.parse(document.getElementById('chart-data').textContent);
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: chartLabels,
+        datasets: [{
+          label: 'Tokens Served',
+          data: chartData,
+          backgroundColor: 'rgba(59,130,246,0.7)',
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: { mode: 'index', intersect: false },
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        },
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart'
+        }
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salon Queue Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/Stylesheets/salon.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" /> 
+</head>
+<body>
+
+<header>
+  <div class="badge" data-aos="fade-up" data-aos-delay="100">💇‍♀️ Beauty at Your Fingertips</div>
+  <h1 data-aos="zoom-in" data-aos-delay="200">Discover Your Ideal <span>Salon Experience</span></h1>
+  <p data-aos="fade-up" data-aos-delay="300">No waiting. Book nearby stylists with real-time availability tracking.</p>
+  <div class="search-wrapper-container" data-aos="fade-up" data-aos-delay="400">
+    <div class="search-wrapper">
+      <input id="salonSearch" type="text" placeholder="Search salons, stylists or services...">
+      <button type="submit">Search</button>
+    </div>
+  </div>
+</header>
+
+<section class="top-section">
+  <div class="card find-card" data-aos="zoom-in" data-aos-delay="200">
+    <button id="findNearYou" class="near-you-btn">
+      <i class="fas fa-map-marker-alt"></i>
+      Find Salons & Stylists Near You
+    </button>
+  </div>
+
+  <div class="card" data-aos="zoom-in" data-aos-delay="300">
+    <h2><%= salons.length%></h2>
+    <p>Total Salons</p>
+    <div class="progress-bar"><div style="width: 80%;"></div></div>
+  </div>
+  <div class="card" data-aos="zoom-in" data-aos-delay="400">
+    <h2><%= salons.length%></h2>
+    <p>Available Now</p>
+    <div class="progress-bar"><div style="width: 50%; background-color: #48bb78;"></div></div>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Nearby Salons (hidden initially) -->
+<div id="nearbySalonCards" class="hospital_container" style="display: none;">
+  <div class="hospital-list" id="nearbySalonList">
+    <!-- JavaScript will inject cards here -->
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+  <!-- Section 1: Features -->
+  <section class="ql-section">
+    <h1 class="ql-section-title" data-aos="zoom-in" data-aos-delay="100">Revolutionary Queue Experience</h1>
+    <p class="ql-section-subtitle"  data-aos="zoom-in" data-aos-delay="200">
+      Transform your beauty service experience with our intelligent queue management system. No more physical waiting, no more uncertainty – just seamless, efficient service when you need it.
+    </p>
+
+    <div class="ql-card-grid">
+      <div class="ql-feature-card">
+        <div class="ql-icon-box"  data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-clock" ></i></div>
+        <h3 data-aos="zoom-in" data-aos-delay="100">Smart Token System</h3>
+        <ul data-aos="zoom-in" data-aos-delay="200">
+          <li>Instant token generation</li>
+          <li>Priority booking available</li>
+          <li>Estimated wait times</li>
+        </ul>
+      </div>
+
+      <div class="ql-feature-card" >
+        <div class="ql-icon-box"  data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-map-marker-alt" ></i></div>
+        <h3 data-aos="zoom-in" data-aos-delay="100">Location-Based Search</h3>
+        <ul data-aos="zoom-in" data-aos-delay="200">
+          <li>GPS-powered search</li>
+          <li>Real-time availability</li>
+          <li>Distance & ratings</li>
+        </ul>
+      </div>
+
+      <div class="ql-feature-card">
+        <div class="ql-icon-box"  data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-sms" ></i></div>
+        <h3 data-aos="zoom-in" data-aos-delay="100">SMS Queue Tracking</h3>
+        <ul data-aos="zoom-in" data-aos-delay="200">
+          <li>Position updates</li>
+          <li>Service reminders</li>
+          <li>Delay notifications</li>
+        </ul>
+      </div>
+
+      <div class="ql-feature-card">
+        <div class="ql-icon-box"  data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-chart-bar" ></i></div>
+        <h3 data-aos="zoom-in" data-aos-delay="100">Live Dashboard</h3>
+        <ul data-aos="zoom-in" data-aos-delay="200">
+          <li>Queue analytics</li>
+          <li>Staff management</li>
+          <li>Revenue insights</li>
+        </ul>
+      </div>
+
+      <div class="ql-feature-card">
+        <div class="ql-icon-box"  data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-users-cog" ></i></div>
+        <h3 data-aos="zoom-in" data-aos-delay="100">Crowd Management</h3>
+        <ul data-aos="zoom-in" data-aos-delay="200">
+          <li>Load balancing</li>
+          <li>Peak hour management</li>
+          <li>Service optimization</li>
+        </ul>
+      </div>
+
+      <div class="ql-feature-card">
+        <div class="ql-icon-box"  data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-calendar-check" ></i></div>
+        <h3 data-aos="zoom-in" data-aos-delay="100">Advance Booking</h3>
+        <ul data-aos="zoom-in" data-aos-delay="200">
+          <li>Future bookings</li>
+          <li>Virtual queueing</li>
+          <li>Calendar integration</li>
+        </ul>
+      </div>
+
+      <div class="ql-feature-card">
+        <div class="ql-icon-box"  data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-bell" ></i></div>
+        <h3 data-aos="zoom-in" data-aos-delay="100">Smart Notifications</h3>
+        <ul data-aos="zoom-in" data-aos-delay="200">
+          <li>Turn alerts</li>
+          <li>Custom timing</li>
+          <li>Multi-channel alerts</li>
+        </ul>
+      </div>
+
+      <div class="ql-feature-card">
+        <div class="ql-icon-box"  data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-shield-alt" ></i></div>
+        <h3 data-aos="zoom-in" data-aos-delay="100">Secure & Reliable</h3>
+        <ul data-aos="zoom-in" data-aos-delay="200">
+          <li>Data encryption</li>
+          <li>Privacy protection</li>
+          <li>24/7 monitoring</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: How It Works -->
+  <section class="ql-how-it-works">
+    <center><h2 data-aos="zoom-in" data-aos-delay="100" class="ql-how-title">How It Works</h2></center>
+    <div class="ql-steps-wrapper">
+      <div class="ql-step-box">
+        <div class="ql-step-number">01</div>
+        <h4 data-aos="zoom-in" data-aos-delay="200"  class="bounce-delay-1">Search & Select</h4>
+        <p>Find nearby salons and check real-time availability</p>
+      </div>
+      <div class="ql-step-box">
+        <div class="ql-step-number">02</div>
+        <h4 data-aos="zoom-in" data-aos-delay="300" class="bounce-delay-2">Get Your Token</h4>
+        <p>Receive your digital queue number instantly</p>
+      </div>
+      <div class="ql-step-box">
+        <div class="ql-step-number">03</div>
+        <h4 data-aos="zoom-in" data-aos-delay="400" class="bounce-delay-3">Relax & Track</h4>
+        <p>Monitor your position via SMS or app while you wait anywhere</p>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+<!-- Explore Shops Near You --> 
+  <section class="nearby-shops-section">
+  <div class="nearby-shops-container">
+    <h2 class="nearby-title" data-aos="zoom-in" data-aos-delay="100">Explore Shops Near You</h2>
+    <p class="nearby-subtitle" data-aos="zoom-in" data-aos-delay="200">
+      Discover a wide range of services and businesses around your location. From essential stores to premium outlets — everything you need is just a step away.
+    </p>
+  </div>
+</section>
+
+
+
+
+
+
+
+<!-- 🔹 Salon Cards -->
+<div class="centeralised-cards">
+
+  <% if (!salons || !Array.isArray(salons) || salons.length === 0) { %>
+    <p style="color:red">⚠️ No salons data passed from backend</p>
+  <% } else { %>
+
+    <% salons.forEach(salon => { %>
+      <% if (salon.adminId) { %>
+        <% 
+          let queueClass = 'light';
+          if (salon.tokenCount > 20) queueClass = 'busy';
+          else if (salon.tokenCount > 10) queueClass = 'moderate';
+        %>
+
+        <div class="hospital-card <%= queueClass %>" data-id="<%= salon._id %>">
+          <div style="position: relative;">
+            <img 
+              src="<%= salon.shopImage?.startsWith('/uploads') ? salon.shopImage : '/shopImages/' + salon.shopImage %>" 
+              alt="Salon Image"
+              onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/2979/2979444.png';" 
+              style="width: 100%; height: 180px; object-fit: cover;" />
+
+            <!-- 🟢 Open/Closed Badge -->
+            <div id="status-<%= salon._id %>" class="shop-status <%= salon.isOpen ? 'open' : 'closed' %>">
+              <i class="fas fa-circle status-indicator"></i>
+              <%= salon.isOpen ? 'Open' : 'Closed' %>
+            </div>
+          </div>
+
+          <div class="hospital-info">
+            <h3><%= salon.shopname %></h3>
+            <p class="location">📍 <%= salon.shopaddress %></p>
+            <p class="rating">⭐ <%= salon.rating || '4.3' %> (<%= salon.reviews || '80+' %> reviews)</p>
+
+            <!-- Queue Info -->
+            <div class="queue-info <%= queueClass %>">
+              <span class="count"><%= salon.tokenCount %> in Queue</span>
+              <span class="time">~<%= salon.formattedWait %></span>
+            </div>
+
+            <!-- 🔹 Wait Progress Bar -->
+            <div class="wait-bar">
+              <div class="fill"
+                  id="fill-<%= salon._id %>"
+                  style="width: <%= salon.fillPercent %>%; background:linear-gradient(to right, #4ade80, #22c55e);">
+              </div>
+            </div>
+
+            <p><strong>Admin:</strong> <%= salon.adminId?.name || 'Not Available' %></p>
+
+            <% 
+              let specialistArray = [];
+
+              if (Array.isArray(salon.specialist)) {
+                specialistArray = salon.specialist;
+              } else if (typeof salon.specialist === 'string') {
+                specialistArray = salon.specialist.split(',').map(s => s.trim());
+              }
+            %>
+
+            <% if (specialistArray.length > 0) { %>
+              <p class="specialties">
+                <strong>Specialists:</strong>
+                <% specialistArray.slice(0, 3).forEach((item, index) => { %>
+                  <%= item %><%= index < specialistArray.slice(0, 3).length - 1 ? ', ' : '' %>
+                <% }) %>
+              </p>
+            <% } else { %>
+              <p class="specialties"><strong>Specialists:</strong> Hair & Beauty</p>
+            <% } %>
+
+            <p class="contact">📞 <%= salon.phone || '+91 XXXXX XXXXX' %></p>
+            <a href="/salon/<%= salon._id %>" class="btn">View Details</a>
+          </div>
+        </div>
+
+      <% } %>
+    <% }) %>
+
+  <% } %>
+</div>
+
+
+
+
+
+
+<footer class="footer-banner" data-aos="fade-up" data-aos-delay="100">
+  <div class="wave-top">
+    <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <path fill="#ffffff" d="M0,64L80,85.3C160,107,320,149,480,149.3C640,149,800,107,960,96C1120,85,1280,107,1360,117.3L1440,128L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"/>
+    </svg>
+  </div>
+
+  <div class="footer-content" data-aos="fade-up" data-aos-delay="200">
+    <h2>Upgrade Your Salon Booking Experience</h2>
+    <p>Thousands trust us to skip the wait and glam up faster.</p>
+    <div class="footer-buttons" data-aos="fade-up" data-aos-delay="300">
+      <!-- <button>🎯 Nearby Stylists</button>
+      <button>🕒 Skip the Wait</button>
+      <button>💅 Instant Booking</button> -->
+    </div>
+  </div>
+</footer>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="/javascripts/salon.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true, offset: 100 });
+</script>
+
+</body>
+</html>

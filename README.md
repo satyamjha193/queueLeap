@@ -1,3 +1,9 @@
+[![Node.js](https://img.shields.io/badge/Node.js-18.x-green.svg)](https://nodejs.org)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Database-brightgreen.svg)](https://www.mongodb.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+
+
 # QueueLeap 🚀
 _A Digital Queue Management System_
 
@@ -71,10 +77,16 @@ npm install express mongoose express-session bcrypt nodemailer multer socket.io 
 Create a .env file in the root directory:
 
 PORT=3000
-MONGO_URI=mongodb://localhost:27017/queueleap
-SESSION_SECRET=yourStrongSecret
-EMAIL_USER=yourEmail@gmail.com
-EMAIL_PASS=yourAppPassword
+MONGO_URI=mongodb://localhost:27017/queueDB
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-app-password
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+SENDGRID_API_KEY=your-sendgrid-api-key
+GOOGLE_MAPS_API_KEY=your-google-maps-api-key
+RECAPTCHA_SITE_KEY=your-recaptcha-site-key
+RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
+
 
 
 4️⃣ Run the server

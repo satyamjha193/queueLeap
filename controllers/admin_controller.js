@@ -52,11 +52,18 @@ exports.registerAdmin = async (req, res) => {
       return res.status(400).send("All fields are required including image.");
     }
 
-    // 🔎 Check for duplicate email
-    const existingAdmin = await Admin.findOne({ email });
-    if (existingAdmin) {
-      return res.status(409).send("Admin already exists.");
+    // 🔎 Check for duplicate email and duplicate phone
+    const existingPhone = await Admin.findOne({ phone });
+    if (existingPhone) {
+      return res.status(409).send("⚠️ Phone number is already registered.");
     }
+
+    // 🔎 Check for duplicate email
+    const existingEmail = await Admin.findOne({ email });
+    if (existingEmail) {
+      return res.status(409).send("⚠️ Email is already registered.");
+    }
+
 
     // 🔐 Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -249,37 +256,30 @@ exports.registerAdmin = async (req, res) => {
       shop = await Salon.findOne({ adminId: savedAdmin._id });
     }
 
+    // registerAdmin
+req.session.adminData = {
+  tokens,
+  servedTokens,
+  stats: {
+    usersInQueue: tokens.length,
+    tokensServed,
+    currentToken,
+  },
+  labels,
+  chartBookedData,
+  chartServedData,
+  currentWaitingTokenId,
+  shop,
+  isOpen,
+};
+return res.redirect("/admin-dashboard");
 
-    // ✅ Render Dashboard
-    return res.render("admin_dashboard", {
-      admin: savedAdmin,
-      shop, 
-      isOpen,
-      queue: null,
-      tokens,
-      servedTokens,
-      stats: {
-        usersInQueue: tokens.length,
-        tokensServed,
-        currentToken,
-      },
-      labels,
-      chartBookedData,
-      chartServedData,
-      currentWaitingTokenId,
-      getSectorIcon,
-    });
 
   } catch (err) {
     console.error("❌ Admin Registration Error:", err);
     return res.status(500).send("Something went wrong during registration.");
   }
 };
-
-
-
-
-
 
 
 
@@ -299,17 +299,23 @@ exports.sendAdminOtpEmail = async (req, res) => {
   req.session.adminOtpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  host: "smtp.gmail.com",
+  port: 587,          // ✅ use 587 for TLS (STARTTLS)
+  secure: false,      // ✅ false for port 587
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    minVersion: "TLSv1.2",  // force TLS 1.2+
+  },
+});
+
 
   const mailOptions = {
-  from: `"QueueSys" <${process.env.EMAIL_USER}>`,
+  from: `"QueueLeap" <${process.env.EMAIL_USER}>`,
   to: email,
-  subject: "QueueSys OTP Verification",
+  subject: "QueueLeap OTP Verification",
   html: `
     <h2>This is your Admin Registration OTP</h2>
     <p><strong>Your OTP is:</strong> <code style="font-size: 20px;">${otp}</code></p>
@@ -1126,6 +1132,31 @@ exports.getAdminDashboard = async (req, res) => {
       currentWaitingTokenId,
       getSectorIcon,
     });
+
+
+// const adminData = req.session.adminData || {};
+// delete req.session.adminData; // optional, clear after reading
+
+// res.render("admin_dashboard", {
+//   admin,
+//   shop: adminData.shop,
+//   isOpen: adminData.isOpen,
+//   queue: null,
+//   tokens: adminData.tokens || [],
+//   servedTokens: adminData.servedTokens || [],
+//   stats: adminData.stats || {},
+//   labels: adminData.labels || [],
+//   chartBookedData: adminData.chartBookedData || [],
+//   chartServedData: adminData.chartServedData || [],
+//   currentWaitingTokenId: adminData.currentWaitingTokenId,
+//   getSectorIcon,
+// });
+
+
+
+
+
+
   } catch (err) {
     console.error("Dashboard Load Error:", err);
     res.status(500).send("Something went wrong while loading the dashboard");
@@ -1232,3 +1263,10 @@ exports.cleanupExpiredTokens = async () => {
   }
 };
 
+
+exports.getAnalyticsReport = (req,res) =>{
+res.render('analyticsReport');
+}
+exports.manageStaff = (req,res) =>{
+res.render('manage_staff');
+}

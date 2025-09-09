@@ -14,6 +14,7 @@ const passport = require("passport");
 const flash = require("connect-flash");
 const http = require("http");
 const dns = require("dns");
+const fetch =  require("node-fetch")
 
 // Load env variables from .env
 dotenv.config();
@@ -144,13 +145,6 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// ----------------------------
-// ✅ OPTIONAL: TWILIO DNS CHECK
-// ----------------------------
-dns.lookup("verify.twilio.com", (err, address) => {
-  if (err) console.error("DNS lookup failed:", err.message);
-  else console.log("Resolved Twilio Verify API to:", address);
-});
 
 // ----------------------------
 // 🧠 SOCKET.IO LOGIC
@@ -245,53 +239,30 @@ io.on("connection", (socket) => {
 
 
 
+// Geocode API proxy
+app.get("/api/geocode", async (req, res) => {
+  try {
+    const query = req.query.q;
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`,
+      {
+        headers: { "User-Agent": "QueueLeap/1.0 (admin@queueleap.com)" }, // required by Nominatim
+      }
+    );
 
+    if (!response.ok) {
+      return res
+        .status(response.status)
+        .json({ error: "Nominatim request failed" });
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const sendSMS = require("./utils/sendSMS");
-
-
-// Use it
-const testPhone = "7989209512";
-const token = "A23";
-const waitTime = "10-15";
-
-console.log("📤 Sending test SMS to", testPhone);
-sendSMS(testPhone, token, waitTime);
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    console.error("Geocode error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 
 

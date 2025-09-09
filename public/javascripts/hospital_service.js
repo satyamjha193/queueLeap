@@ -45,25 +45,19 @@ if (params.get('success') === 'true') {
 }
 
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+  const form = document.querySelector("form");
+  const phone = document.getElementById("phone");
+
+  form.addEventListener("submit", function (e) {
+    const phoneNumber = phone.value.trim();
+
+    // Check if it's exactly 10 digits
+    if (!/^\d{10}$/.test(phoneNumber)) {
+      e.preventDefault(); // stop form submission
+      alert("Incorrect Number! Please enter a valid 10-digit phone number.");
+      phone.focus();
+    }
+  });
  
  
   const qrImg = document.getElementById('qrImage');
@@ -123,17 +117,7 @@ if (params.get('success') === 'true') {
     liveUpdates.prepend(div);
   });
 
-  // socket.on('queueStatsUpdate', (data) => {
-  //   const waitTime = data.estimatedWait >= 60
-  //     ? `${Math.floor(data.estimatedWait / 60)} hr ${data.estimatedWait % 60} min`
-  //     : `${data.estimatedWait} min`;
-
-  //   const waitElem = document.getElementById('waitTime');
-  //   const queueElem = document.getElementById('queuePos');
-  //   if (waitElem) waitElem.textContent = `~${waitTime}`;
-  //   if (queueElem) queueElem.textContent = `#${data.peopleInQueue}`;
-  // });
-
+ 
 
 
   socket.on('queueUpdate', (data) => {

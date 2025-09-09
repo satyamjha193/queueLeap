@@ -152,19 +152,11 @@ header p {
   gap: 1.5rem;
 }
 
-/* === Salon Card === */
-/* .hospital-card {
-  background-color: #fff;
-  width: 320px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
-} */
 
 
+/* salon card */
 .hospital-card {
-  background-color: #b50e0e;
+  background-color: #fafafa;
   width: calc(50% - 12px); /* 2 cards in row with 24px gap */
   border-radius: 16px;
   display: block;

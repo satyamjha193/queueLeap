@@ -138,14 +138,16 @@ router.delete("/admin/delete-token/:id", async (req, res) => {
 });
 
 
-// ✅ New route to view expired tokens
-router.get('/admin/expired-tokens', adminController.getExpiredTokens);
 
 // POST /api/toggle-shop-status
-router.post("/admin/toggle-shop-status",adminController.toggleShopStatus);
+router.post("/admin/toggle-shop-status",isAdminLoggedIn,adminController.toggleShopStatus);
 
 
 
+
+router.get('/admin/analyticsReport', isAdminLoggedIn,adminController.getAnalyticsReport);
+router.get('/admin/expired-tokens', isAdminLoggedIn,adminController.getExpiredTokens);
+router.get('/admin/manageStaff', isAdminLoggedIn,adminController.manageStaff);
 
 
 

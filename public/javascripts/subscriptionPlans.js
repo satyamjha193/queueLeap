@@ -27,3 +27,26 @@
       });
     });
   });
+
+
+
+
+
+  
+ // Show overlay on any interaction
+  let dummyShown = false;
+  function showDummyCard() {
+    if(dummyShown) return;
+    dummyShown = true;
+    document.getElementById("dummyOverlay").style.display = "flex";
+  }
+
+  // Close overlay
+  document.querySelector(".dummyClose").addEventListener("click", () => {
+    document.getElementById("dummyOverlay").style.display = "none";
+  });
+
+  // Trigger on user interaction
+  document.addEventListener("click", showDummyCard);
+  document.addEventListener("focusin", showDummyCard);
+  document.addEventListener("scroll", showDummyCard);

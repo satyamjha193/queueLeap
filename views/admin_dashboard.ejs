@@ -29,12 +29,6 @@
 <body data-admin-id="<%= admin._id %>">
 
 
-
-
-
-
-
-
 <!-- Confirm Modal -->
 <div id="confirmModal" class="modal-backdrop" style="display: none;">
   <div class="modal-box">
@@ -111,19 +105,21 @@
 
 
 
-
-
-
     <button class="active" data-aos="zoom-in" data-aos-delay="0"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
     <button id="profile_setting_page" data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-user-cog"></i> Profile & Settings</button>
-    <button data-aos="zoom-in" data-aos-delay="200"><i class="fas fa-users-cog"></i> Manage Users</button>
-    <button data-aos="zoom-in" data-aos-delay="300"><i class="fas fa-users"></i> Manage Staff</button>
+    <!-- <button data-aos="zoom-in" data-aos-delay="200"><i class="fas fa-users-cog"></i> Manage Users</button> -->
+    <button data-aos="zoom-in" data-aos-delay="300"><i class="fas fa-users"></i><a href="/admin/manageStaff" style="text-decoration:none; color:rgb(0, 0, 0);">Manage Staff</a> </button>
     <button data-aos="zoom-in" data-aos-delay="400"><i class="fas fa-coffee"></i> Break Time</button>
-    <button data-aos="zoom-in" data-aos-delay="500"><i class="fas fa-file-alt"></i> View Reports</button>
-    <button data-aos="zoom-in" data-aos-delay="600"><a href="/admin/expired-tokens" class="btn btn-secondary" style="text-decoration:none">📋 View Expired Tokens</a></button>
+    <button onclick="analbtn()" data-aos="zoom-in" data-aos-delay="500"><i class="fas fa-file-alt"></i><a href="/admin/analyticsReport" style="text-decoration:none; color:rgb(0, 0, 0);">View Reports</a> </button>
+    <button data-aos="zoom-in" data-aos-delay="600"><a href="/admin/expired-tokens" class="btn btn-secondary" style="text-decoration:none; color:rgb(0, 0, 0);">📋 View Expired Tokens</a></button>
   </div>
 </nav>
 
+<script>
+  function analbtn(){
+     console.log("anl")
+  }
+</script>
 
     <main class="dashboard">
  
@@ -492,19 +488,6 @@
     });
   });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>

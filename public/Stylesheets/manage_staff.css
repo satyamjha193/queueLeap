@@ -207,3 +207,62 @@
     font-size: 13px;
   }
 }
+
+
+
+
+/* dummy page display! */
+  #dummyOverlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Card */
+  .dummyCard {
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 12px;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    animation: popIn 0.3s ease;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .dummyCard h2 {
+    color: #d9534f;
+    margin-bottom: 10px;
+  }
+
+  .dummyCard p {
+    color: #333;
+    font-size: 16px;
+  }
+
+  .dummyClose {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s;
+  }
+
+  .dummyClose:hover {
+    color: #d9534f;
+  }

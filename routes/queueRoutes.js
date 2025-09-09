@@ -22,24 +22,7 @@ router.get("/services", (req, res) => res.redirect("/#services"));
 router.get("/hospital_services", (req, res) => res.render("hospital_service"));
 router.get("/college", (req, res) => res.render("college"));
 
-// // Google OAuth
-// router.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-// router.get("/auth/google/callback",
-//   passport.authenticate("google", { failureRedirect: "/login", session: false }),
-//   (req, res) => {
-//     req.session.user = {
-//       id: req.user._id,
-//       name: req.user.name,
-//       email: req.user.email,
-//     };
-//     res.redirect("/");
-//   }
-// );
 
-// // OTP & User Registration
-// router.post("/register/phone/send-otp", otpController.sendOtp);
-// router.post("/register/phone/verify-otp", otpController.verifyOtp);
-// router.post("/register/phone", userControllers.verifyOtpAndRegister);
 
 // Admin Registration (with image upload)
 const adminController = require("../controllers/admin_controller"); // ✅ correct import

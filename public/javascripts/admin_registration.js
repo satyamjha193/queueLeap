@@ -52,13 +52,19 @@ document.getElementById("emailOtpForm").addEventListener("submit", async (e) => 
 });
 
 // Back to Step 1
-document.getElementById("backToStep1Btn").addEventListener("click", function () {
-  document.getElementById("emailForm").style.display = "block";
-  document.getElementById("step2-section").style.display = "none";
-  this.style.display = "none";
-  document.querySelector(".step-indicator .step:nth-child(1)").classList.add("active");
-  document.querySelector(".step-indicator .step:nth-child(3)").classList.remove("active");
+document.addEventListener("DOMContentLoaded", () => {
+  const backBtn = document.getElementById("backToStep1Btn");
+  if (backBtn) {
+    backBtn.addEventListener("click", function () {
+      document.getElementById("emailForm").style.display = "block";
+      document.getElementById("step2-section").style.display = "none";
+      this.style.display = "none";
+      document.querySelector(".step-indicator .step:nth-child(1)").classList.add("active");
+      document.querySelector(".step-indicator .step:nth-child(3)").classList.remove("active");
+    });
+  }
 });
+
 
 
 
@@ -84,50 +90,58 @@ map.on('click', function (e) {
   document.getElementById("locationMapUrl").value = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=18/${lat}/${lng}`;
 });
 
-// Debounced address search
-let debounceTimer;
-const addressInput = document.getElementById("shopaddress");
-const statusText = document.getElementById("address-status");
+document.addEventListener("DOMContentLoaded", () => {
+  const addressInput = document.getElementById("shopaddress");
+  const statusText = document.getElementById("address-status");
 
-addressInput.addEventListener("input", function () {
-  const address = this.value.trim();
-  clearTimeout(debounceTimer);
-
-  if (address.length > 3) {
-    statusText.textContent = "🔍 Searching...";
-    debounceTimer = setTimeout(() => {
-      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.length > 0) {
-            const lat = parseFloat(data[0].lat);
-            const lon = parseFloat(data[0].lon);
-            map.setView([lat, lon], 15);
-
-            if (!marker) {
-              marker = L.marker([lat, lon]).addTo(map);
-            } else {
-              marker.setLatLng([lat, lon]);
-            }
-
-            document.getElementById("lat").value = lat.toFixed(6);
-            document.getElementById("lng").value = lon.toFixed(6);
-            document.getElementById("locationMapUrl").value = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}`;
-            statusText.textContent = "✅ Location found!";
-          } else {
-            statusText.textContent = "❌ Address not found. Try refining it.";
-            document.getElementById("locationMapUrl").value = "";
-          }
-        })
-        .catch(() => {
-          statusText.textContent = "⚠️ Error contacting location service.";
-        });
-    }, 600);
-  } else {
-    statusText.textContent = "";
-    document.getElementById("locationMapUrl").value = "";
+  if (!addressInput || !statusText) {
+    console.warn("⚠️ Missing shopaddress or address-status element in DOM");
+    return; // exit safely
   }
+
+  let debounceTimer;
+  addressInput.addEventListener("input", function () {
+    const address = this.value.trim();
+    clearTimeout(debounceTimer);
+
+    if (address.length > 3) {
+      statusText.textContent = "🔍 Searching...";
+      debounceTimer = setTimeout(() => {
+        fetch(`/api/geocode?q=${encodeURIComponent(address)}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.length > 0) {
+              const lat = parseFloat(data[0].lat);
+              const lon = parseFloat(data[0].lon);
+              map.setView([lat, lon], 15);
+
+              if (!marker) {
+                marker = L.marker([lat, lon]).addTo(map);
+              } else {
+                marker.setLatLng([lat, lon]);
+              }
+
+              document.getElementById("lat").value = lat.toFixed(6);
+              document.getElementById("lng").value = lon.toFixed(6);
+              document.getElementById("locationMapUrl").value =
+                `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}`;
+              statusText.textContent = "✅ Location found!";
+            } else {
+              statusText.textContent = "❌ Address not found. Try refining it.";
+              document.getElementById("locationMapUrl").value = "";
+            }
+          })
+          .catch(() => {
+            statusText.textContent = "⚠️ Error contacting location service.";
+          });
+      }, 600);
+    } else {
+      statusText.textContent = "";
+      document.getElementById("locationMapUrl").value = "";
+    }
+  });
 });
+
 
 
 // ✅ 3. Stripe Plan Toggle Logic
@@ -172,3 +186,104 @@ function submitOTP(e) {
   console.log("Verifying OTP:", otp);
   alert("Phone verified & registered!");
 }
+
+
+
+
+
+function validateRegistrationForm() {
+  const requiredFields = [
+    "name",              // Full name
+    "sectorname",        // Sector / area name
+    "shopname",          // Hospital / Shop name
+    "shopaddress",       // Address input
+    "email",             // Email
+    "phone",             // Phone number
+    "password",          // Account password
+    "estimatedWaitTime", // Estimated wait time in minutes
+    "lat",               // Latitude from map
+    "lng",               // Longitude from map
+    "locationMapUrl",    // Generated OpenStreetMap link
+    "specialist",        // Specialist
+  ];
+
+  for (let field of requiredFields) {
+    const input = document.querySelector(`[name="${field}"]`);
+    if (!input || !input.value.trim()) {
+      alert(`⚠️ Missing field: ${field}`);
+      input?.focus();
+      return false;
+    }
+  }
+
+  // ✅ Image validation
+  const imageInput = document.querySelector('[name="shopImage"]');
+  if (!imageInput || imageInput.files.length === 0) {
+    alert("⚠️ Please upload a shop image.");
+    imageInput?.focus();
+    return false;
+  }
+
+  // ✅ Phone number validation
+  const phone = document.querySelector('[name="phone"]').value.trim();
+  if (!/^\d{10}$/.test(phone)) {
+    alert("⚠️ Enter a valid 10-digit phone number.");
+    return false;
+  }
+
+  // ✅ Email validation
+  const email = document.querySelector('[name="email"]').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert("⚠️ Enter a valid email address.");
+    return false;
+  }
+
+  return true;
+}
+
+// Hook into OTP request
+
+async function handleOtpRequest() {
+  if (!validateRegistrationForm()) return; // ⛔ Stop if invalid
+
+  const email = document.querySelector('input[name="email"]').value;
+
+  // ✅ Select the button and disable it BEFORE sending OTP
+  const otpBtn = document.querySelector('button[onclick="handleOtpRequest()"]');
+  otpBtn.disabled = true;
+
+  // ✅ Show loader
+  const loader = document.getElementById("loadingSpinner");
+  loader.style.display = "block";
+
+  try {
+    const res = await fetch("/send-admin-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+
+    // ✅ Hide loader and re-enable button
+    loader.style.display = "none";
+    otpBtn.disabled = false;
+
+    if (res.ok) {
+      // ✅ Show Step 2
+      document.getElementById("emailForm").style.display = "none";
+      document.getElementById("step2-section").style.display = "block";
+      document.getElementById("backToStep1Btn").style.display = "inline-block";
+      document.querySelector(".step-indicator .step:nth-child(1)").classList.remove("active");
+      document.querySelector(".step-indicator .step:nth-child(3)").classList.add("active");
+    } else {
+      alert(data.message || "Failed to send OTP");
+    }
+  } catch (err) {
+    console.error(err);
+    loader.style.display = "none";  // ✅ Hide loader on error
+    otpBtn.disabled = false;         // ✅ Re-enable button on error
+    alert("Something went wrong.");
+  }
+}
+
